@@ -20,4 +20,4 @@ var derivedKey = pbkdf2('password', 'salt', 1, 32, 'sha512')
 
 ## Credits
 
-This module is a derivative of https://github.com/cryptocoinjs/pbkdf2-sha256/, so thanks to [JP Richardson](https://github.com/cryptocoinjs/pbkdf2-sha256/) for laying the ground work there.
+This module is a derivative of https://github.com/cryptocoinjs/pbkdf2-sha256/, so thanks to [JP Richardson](https://github.com/cryptocoinjs/pbkdf2-sha256/) for laying the ground work.
