@@ -1,7 +1,19 @@
 var assert = require('assert')
 var crypto = require('crypto')
 
-module.exports = function pbkdf2(password, salt, iterations, keylen, algo) {
+module.exports = function pbkdf2Sync(password, salt, iterations, keylen, algo) {
+  if ('number' !== typeof iterations)
+    throw new TypeError('Iterations not a number')
+
+  if (iterations < 0)
+    throw new TypeError('Bad iterations')
+
+  if ('number' !== typeof keylen)
+    throw new TypeError('Key length not a number')
+
+  if (keylen < 0)
+    throw new TypeError('Bad key length')
+
   algo = algo || 'sha1'
 
   if (!Buffer.isBuffer(password)) password = new Buffer(password)
