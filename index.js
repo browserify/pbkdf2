@@ -19,12 +19,10 @@ module.exports = function pbkdf2Sync(password, salt, iterations, keylen, algo) {
   if (!Buffer.isBuffer(password)) password = new Buffer(password)
   if (!Buffer.isBuffer(salt)) salt = new Buffer(salt)
 
+  var hLen, l = 1, r, T
   var DK = new Buffer(keylen)
   var block1 = new Buffer(salt.length + 4)
   salt.copy(block1, 0, 0, salt.length)
-
-  // TODO: assumed 1 is acceptable...
-  var hLen, l = 1, r, T
 
   for (var i = 1; i <= l; i++) {
     block1.writeUInt32BE(i, salt.length)
