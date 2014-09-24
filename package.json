@@ -6,11 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "istanbul": "^0.3.2"
-  },
   "devDependencies": {
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "istanbul": "^0.3.2"
   },
   "scripts": {
     "coverage": "istanbul cover mocha -- test/*.js",
