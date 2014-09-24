@@ -78,5 +78,34 @@
       }
     }
   ],
-  "invalid": []
+  "invalid": [
+    {
+      "key": "password",
+      "salt": "salt",
+      "iterations": "NaN",
+      "dkLen": 16,
+      "exception": "Iterations not a number"
+    },
+    {
+      "key": "password",
+      "salt": "salt",
+      "iterations": -1,
+      "dkLen": 16,
+      "exception": "Bad iterations"
+    },
+    {
+      "key": "password",
+      "salt": "salt",
+      "iterations": 1,
+      "dkLen": "NaN",
+      "exception": "Key length not a number"
+    },
+    {
+      "key": "password",
+      "salt": "salt",
+      "iterations": 1,
+      "dkLen": -1,
+      "exception": "Bad key length"
+    }
+  ]
 }
