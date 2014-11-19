@@ -10,7 +10,7 @@ module.exports = function(crypto) {
       throw new Error('No callback provided to pbkdf2')
 
     if (typeof digest === 'undefined' && global.crypto && global.crypto.subtle) {
-      native(password, salt, iterations, keylen).catch(function () {
+      native(password, salt, iterations, keylen * 8).catch(function () {
         return pbkdf2Sync(password, salt, iterations, keylen, digest);
       }).then(function (result) {
         callback(null, result);
