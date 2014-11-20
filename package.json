@@ -2,32 +2,31 @@
   "name": "pbkdf2-compat",
   "version": "2.0.1",
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "devDependencies": {
-    "mocha": "^1.21.4",
-    "istanbul": "^0.3.2"
-  },
-  "scripts": {
-    "coverage": "istanbul cover mocha -- test/*.js",
-    "test": "istanbul test mocha -- --reporter list test/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dcousens/pbkdf2-compat.git"
-  },
+  "main": "./index.js",
   "keywords": [
     "pbkdf2",
     "kdf",
     "salt",
     "hash"
   ],
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- test/*.js",
+    "coveralls": "npm run coverage && coveralls < coverage/lcov.info",
+    "test": "istanbul test mocha -- --reporter list test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dcousens/pbkdf2-compat.git"
+  },
   "author": "Daniel Cousens",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dcousens/pbkdf2-compat/issues"
   },
-  "homepage": "https://github.com/dcousens/pbkdf2-compat"
+  "homepage": "https://github.com/dcousens/pbkdf2-compat",
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "istanbul": "^0.3.2"
+  },
+  "dependencies": {}
 }
