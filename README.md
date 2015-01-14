@@ -1,7 +1,7 @@
 # pbkdf2-compat
 
-[![build status](https://secure.travis-ci.org/dcousens/pbkdf2-compat.png)](http://travis-ci.org/dcousens/pbkdf2-compat)
-[![Coverage Status](https://img.shields.io/coveralls/dcousens/pbkdf2-compat.svg)](https://coveralls.io/r/dcousens/pbkdf2-compat)
+[![build status](https://secure.travis-ci.org/crypto-browserify/pbkdf2-compat.png)](http://travis-ci.org/crypto-browserify/pbkdf2-compat)
+[![Coverage Status](https://img.shields.io/coveralls/crypto-browserify/pbkdf2-compat.svg)](https://coveralls.io/r/crypto-browserify/pbkdf2-compat)
 [![Version](http://img.shields.io/npm/v/pbkdf2-compat.svg)](https://www.npmjs.org/package/pbkdf2-compat)
 
 This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from `crypto.getHashes()`
