@@ -1,3 +1,4 @@
+var native = require('./native');
 module.exports = function(crypto) {
   function pbkdf2(password, salt, iterations, keylen, digest, callback) {
     if ('function' === typeof digest) {
@@ -8,6 +9,20 @@ module.exports = function(crypto) {
     if ('function' !== typeof callback)
       throw new Error('No callback provided to pbkdf2')
 
+    if (global.crypto && global.crypto.subtle) {
+      native(password, salt, iterations, keylen * 8, digest).catch(function (e) {
+        return pbkdf2Sync(password, salt, iterations, keylen, digest);
+      }).then(function (result) {
+        setTimeout(function() {
+          callback(null, result);
+        });
+      }).catch(function (e) {
+        setTimeout(function() {
+          callback(e);
+        });
+      });
+      return;
+    }
     setTimeout(function() {
       var result
 
