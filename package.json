@@ -12,7 +12,8 @@
   "scripts": {
     "coverage": "istanbul cover _mocha -- test/*.js",
     "coveralls": "npm run coverage && coveralls < coverage/lcov.info",
-    "test": "istanbul test mocha -- --reporter list test/*.js"
+    "test": "istanbul test mocha -- --reporter list test/*.js",
+    "bundle-test": "browserify test/ > test/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
   },
   "homepage": "https://github.com/crypto-browserify/pbkdf2-compat",
   "devDependencies": {
+    "browserify": "^8.1.1",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.5",
     "mocha": "^2.1.0"

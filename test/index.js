@@ -7,10 +7,10 @@ var fixtures = require('./fixtures')
 // SHA-256/SHA-512 test vectors from:
 // https://stackoverflow.com/questions/5130513/pbkdf2-hmac-sha2-test-vectors
 // https://stackoverflow.com/questions/15593184/pbkdf2-hmac-sha-512-test-vectors
-
+var algos = ['sha1', 'sha224', 'sha256',  'sha384', 'sha512'];
 describe('pbkdf2-compat', function() {
   describe('pbkdf2', function() {
-    ;['sha1', 'sha256', 'sha512'].forEach(function(algorithm) {
+    ;algos.forEach(function(algorithm) {
       describe(algorithm, function() {
         fixtures.valid.forEach(function(f, i) {
           var expected = f.results[algorithm]
@@ -50,7 +50,7 @@ describe('pbkdf2-compat', function() {
       assert.equal(result.toString('hex'), "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164")
     })
 
-    ;['sha1', 'sha256', 'sha512'].forEach(function(algorithm) {
+    ;algos.forEach(function(algorithm) {
       describe(algorithm, function() {
         fixtures.valid.forEach(function(f, i) {
           var expected = f.results[algorithm]
