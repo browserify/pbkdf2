@@ -9,12 +9,18 @@ module.exports = function(crypto) {
     if ('function' !== typeof callback)
       throw new Error('No callback provided to pbkdf2')
 
-    if (typeof digest === 'undefined' && global.crypto && global.crypto.subtle) {
-      native(password, salt, iterations, keylen * 8).catch(function () {
+    if (global.crypto && global.crypto.subtle) {
+      native(password, salt, iterations, keylen * 8, digest).catch(function (e) {
         return pbkdf2Sync(password, salt, iterations, keylen, digest);
       }).then(function (result) {
-        callback(null, result);
-      }).catch(callback);
+        setTimeout(function() {
+          callback(null, result);
+        });
+      }).catch(function (e) {
+        setTimeout(function() {
+          callback(e);
+        });
+      });
       return;
     }
     setTimeout(function() {
