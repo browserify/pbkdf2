@@ -1,4 +1,76 @@
 var crypto = require('crypto');
+var fork = require('child_process').fork;
+var path = require('path');
+var compat = require('./browser');
+function asyncpbkdf2(password, salt, iterations, keylen, digest, callback) {
+  if (typeof iterations !== 'number') {
+    throw new TypeError('Iterations not a number')
+  }
+  if (iterations < 0) {
+    throw new TypeError('Bad iterations')
+  }
 
-exports.pbkdf2 = crypto.pbkdf2;
-exports.pbkdf2Sync = crypto.pbkdf2Sync;
+  if (typeof keylen !== 'number') {
+    throw new TypeError('Key length not a number')
+  }
+
+  if (keylen < 0) {
+    throw new TypeError('Bad key length')
+  }
+  var msg = {
+    password: password.toString(),
+    salt: salt.toString(),
+    iterations: iterations,
+    keylen: keylen,
+    digest: digest
+  };
+
+  var child = fork(path.resolve(__dirname, 'async-shim.js'));
+  child.on('message', function (resp) {
+    child.kill();
+    callback(null, new Buffer(resp,'hex'));
+  }).on('error', function (err) {
+    child.kill();
+    callback(err);
+  });
+  child.send(msg);
+}
+
+exports.pbkdf2Sync = function pbkdf2Sync(password, salt, iterations, keylen, digest) {
+  digets = digest || 'sha1';
+  if (isNode10()) {
+    if (digest === 'sha1') {
+      return crypto.pbkdf2Sync(password, salt, iterations, keylen);
+    } else {
+      return compat.pbkdf2Sync(password, salt, iterations, keylen, digest);
+    }
+  } else {
+    return crypto.pbkdf2Sync(password, salt, iterations, keylen, digest);
+  }
+};
+
+exports.pbkdf2 = function pbkdf2(password, salt, iterations, keylen, digest, callback) {
+  if (typeof digest ===  'function') {
+    callback = digest;
+    digest = 'sha1';
+  }
+
+  if (isNode10()) {
+    if (digest === 'sha1') {
+      return crypto.pbkdf2(password, salt, iterations, keylen, callback);
+    } else {
+      return asyncpbkdf2(password, salt, iterations, keylen, digest, callback);
+    }
+  } else {
+    return crypto.pbkdf2(password, salt, iterations, keylen, digest, callback);
+  }
+};
+
+var sha1 = '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164';
+var isNode10Result;
+function isNode10() {
+  if (typeof isNode10Result === 'undefined') {
+    isNode10Result = crypto.pbkdf2Sync('password', 'salt', 1, 32, 'sha256').toString('hex') === sha1;
+  }
+  return isNode10Result;
+}
