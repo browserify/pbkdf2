@@ -1,6 +1,6 @@
 {
   "name": "pbkdf2-compat",
-  "version": "2.0.1",
+  "version": "3.0.1",
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
   "main": "./index.js",
   "browser": "./browser.js",
