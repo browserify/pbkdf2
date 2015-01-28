@@ -37,7 +37,7 @@ function asyncpbkdf2(password, salt, iterations, keylen, digest, callback) {
 }
 
 exports.pbkdf2Sync = function pbkdf2Sync(password, salt, iterations, keylen, digest) {
-  digets = digest || 'sha1';
+  digest = digest || 'sha1';
   if (isNode10()) {
     if (digest === 'sha1') {
       return crypto.pbkdf2Sync(password, salt, iterations, keylen);
