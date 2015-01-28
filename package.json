@@ -13,6 +13,7 @@
   "scripts": {
     "coverage": "istanbul cover _mocha -- -t 20000 test/index.js",
     "coveralls": "npm run coverage && coveralls < coverage/lcov.info",
+    "standard": "standard",
     "test": "mocha --reporter list -t 20000 test/index.js",
     "bundle-test": "browserify test/index.js > test/bundle.js"
   },
@@ -30,9 +31,15 @@
     "browserify": "^8.1.1",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.5",
-    "mocha": "^2.1.0"
+    "mocha": "^2.1.0",
+    "standard": "^1.3.0"
   },
   "dependencies": {
     "create-hmac": "^1.1.0"
+  },
+  "standard": {
+    "ignore": [
+      "test/**"
+    ]
   }
 }
