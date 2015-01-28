@@ -15,13 +15,14 @@ function runTests(compat, name) {
     var algos = ['sha1', 'sha224', 'sha256',  'sha384', 'sha512'];
     describe('pbkdf2-compat', function() {
       it('defaults to sha1 and handles buffers', function(done) {
-        var result = compat.pbkdf2(new Buffer('password'), new Buffer('salt'), 1, 32, function (err, result) {
+        compat.pbkdf2(new Buffer('password'), new Buffer('salt'), 1, 32, function (err, result) {
           assert.equal(result.toString('hex'), "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164")
           done();
         });
       })
+
       describe('pbkdf2', function() {
-        ;algos.forEach(function(algorithm) {
+        algos.forEach(function(algorithm) {
           describe(algorithm, function() {
             fixtures.valid.forEach(function(f, i) {
               var expected = f.results[algorithm]
