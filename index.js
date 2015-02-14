@@ -19,6 +19,11 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   if (keylen < 0) {
     throw new TypeError('Bad key length')
   }
+  if (typeof password === 'string')
+    password = new Buffer(password)
+
+  if (typeof salt === 'string')
+    salt = new Buffer(salt)
 
   var child = fork(path.resolve(__dirname, 'async-shim.js'))
 
@@ -31,8 +36,8 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   })
 
   child.send({
-    password: password.toString(),
-    salt: salt.toString(),
+    password: password.toString('hex'),
+    salt: salt.toString('hex'),
     iterations: iterations,
     keylen: keylen,
     digest: digest
