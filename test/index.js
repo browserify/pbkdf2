@@ -79,6 +79,32 @@ function runTests(compat, name) {
           })
         })
       })
+
+      describe('encoding bug', function () {
+         var password = 'test'
+          var salt = new Buffer('7b970da6a2fddaba', 'hex')
+          var iterations = 1000
+          var length = 64
+          var algo = 'sha512'
+          var expected = '7c89cceaea1811b0aeaf23587fadb4b80580d9b26c7e7489ec56f9f0a84c1b612c788ddfb4a86dee8e5be70d4742b84ff3e818e3b83aa68d21db5b4d9f70dc8e'
+         
+        it("should get the correct result sync", function () {
+          var result = compat.pbkdf2Sync(password, salt, iterations, length, algo).toString('hex')
+          assert.equal(result, expected)
+        })
+
+        it("should get the correct result async", function (done) {
+          compat.pbkdf2(password, salt, iterations, length, algo, function (err, res) {
+            if (err) {
+              return done(err)
+            }
+            var result = res.toString('hex')
+            assert.equal(result, expected)
+            done()
+          })
+          
+        })
+      })
     })
   })
 }

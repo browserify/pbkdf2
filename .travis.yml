@@ -4,6 +4,8 @@ before_install:
 node_js:
   - "0.10"
   - "0.11"
+  - "0.12"
+  - "iojs"
 env:
   - TEST_SUITE=test
   - TEST_SUITE=coveralls
