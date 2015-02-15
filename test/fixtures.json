@@ -90,6 +90,19 @@
         "sha224": "0aca9ca9634db6ef4927931f633c6453",
         "sha384": "b6ab6f8f6532fd9c5c30a79e1f93dcc6"
       }
+    },
+    {
+      "keyHex": "63ffeeddccbbaa",
+      "salt": "salt",
+      "iterations": 1,
+      "dkLen": 32,
+      "results": {
+        "sha1": "f6635023b135a57fb8caa89ef8ad93a29d9debb1b011e6e88bffbb212de7c01c",
+        "sha256": "dadd4a2638c1cf90a220777bc85d81859459513eb83063e3fce7d081490f259a",
+        "sha512": "f69de451247225a7b30cc47632899572bb980f500d7c606ac9b1c04f928a3488",
+        "sha224": "9cdee023b5d5e06ccd6c5467463e34fe461a7ed43977f8237f97b0bc7ebfd280",
+        "sha384": "25c72b6f0e052c883a9273a54cfd41fab86759fa3b33eb7920b923abaad62f99"
+      }
     }
   ],
   "invalid": [
