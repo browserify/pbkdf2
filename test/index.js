@@ -23,10 +23,11 @@ function runTests(compat, name) {
           describe(algorithm, function() {
             fixtures.valid.forEach(function(f) {
               var key = f.key || new Buffer(f.keyHex, 'hex')
+              var salt = f.salt || new Buffer(f.saltHex, 'hex')
               var expected = f.results[algorithm]
 
               it('encodes ' + key + '(' + f.salt + ') with ' + algorithm + ' to ' + expected, function(done) {
-                compat.pbkdf2(key, f.salt, f.iterations, f.dkLen, algorithm, function(err, result) {
+                compat.pbkdf2(key, salt, f.iterations, f.dkLen, algorithm, function(err, result) {
                   assert.equal(result.toString('hex'), expected)
 
                   done()
@@ -62,10 +63,11 @@ function runTests(compat, name) {
           describe(algorithm, function() {
             fixtures.valid.forEach(function(f) {
               var key = f.key || new Buffer(f.keyHex, 'hex')
+              var salt = f.salt || new Buffer(f.saltHex, 'hex')
               var expected = f.results[algorithm]
 
               it('encodes ' + key + '(' + f.salt + ') with ' + algorithm + ' to ' + expected, function() {
-                var result = compat.pbkdf2Sync(key, f.salt, f.iterations, f.dkLen, algorithm)
+                var result = compat.pbkdf2Sync(key, salt, f.iterations, f.dkLen, algorithm)
 
                 assert.equal(result.toString('hex'), expected)
               })
