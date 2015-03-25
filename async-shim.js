@@ -10,7 +10,7 @@ process.on('message', function (m) {
     })
   } catch (e) {
     process.send({
-      data: e.message,
+      data: e && e.message,
       type: 'fail'
     })
   } finally {

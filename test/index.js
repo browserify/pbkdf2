@@ -50,18 +50,6 @@ function runTests(compat, name) {
             compat.pbkdf2('password', 'salt', 1, 32, 'sha1')
           }, /No callback provided to pbkdf2/)
         })
-        if (name === 'node pbkdf2') {
-          it('should throw async error if length is too great', function (done) {
-            compat.pbkdf2('foo', 'bar', 10, 15339169000, 'sha224', function (err) {
-              if (err) {
-                console.log(err)
-                done()
-              } else {
-                done(new Error('should error'))
-              }
-            })
-          })
-        }
       })
 
       describe('pbkdf2Sync', function() {

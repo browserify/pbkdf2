@@ -1,4 +1,5 @@
 var createHmac = require('create-hmac')
+var MAX_INT = Math.pow(2, 30) - 1 // default in iojs
 
 exports.pbkdf2 = pbkdf2
 function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
@@ -28,7 +29,7 @@ function pbkdf2Sync (password, salt, iterations, keylen, digest) {
   if (typeof keylen !== 'number')
     throw new TypeError('Key length not a number')
 
-  if (keylen < 0)
+  if (keylen < 0 || keylen > MAX_INT)
     throw new TypeError('Bad key length')
 
   digest = digest || 'sha1'
@@ -54,8 +55,6 @@ function pbkdf2Sync (password, salt, iterations, keylen, digest) {
       T = new Buffer(hLen)
       l = Math.ceil(keylen / hLen)
       r = keylen - (l - 1) * hLen
-      if (keylen > (Math.pow(2, 32) - 1) * hLen)
-        throw new TypeError('keylen exceeds maximum length')
     }
 
     U.copy(T, 0, 0, hLen)
