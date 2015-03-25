@@ -1,7 +1,19 @@
 var compat = require('./browser')
 
 process.on('message', function (m) {
-  var result = compat.pbkdf2Sync(new Buffer(m.password, 'hex'), new Buffer(m.salt, 'hex'), m.iterations, m.keylen, m.digest)
+  try {
+    var result = compat.pbkdf2Sync(new Buffer(m.password, 'hex'), new Buffer(m.salt, 'hex'), m.iterations, m.keylen, m.digest)
 
-  process.send(result.toString('hex'))
+    process.send({
+      data: result.toString('hex'),
+      type: 'success'
+    })
+  } catch (e) {
+    process.send({
+      data: e.message,
+      type: 'fail'
+    })
+  } finally {
+    process.exit()
+  }
 })

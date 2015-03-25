@@ -28,11 +28,11 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   var child = fork(path.resolve(__dirname, 'async-shim.js'))
 
   child.on('message', function (result) {
-    child.kill()
-    callback(null, new Buffer(result, 'hex'))
-  }).on('error', function (err) {
-    child.kill()
-    callback(err)
+    if (result.type === 'success') {
+      callback(null, new Buffer(result.data, 'hex'))
+    } else if (result.type === 'fail') {
+      callback(new TypeError(result.data))
+    }
   })
 
   child.send({

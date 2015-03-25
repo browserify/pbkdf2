@@ -54,7 +54,6 @@ function pbkdf2Sync (password, salt, iterations, keylen, digest) {
       T = new Buffer(hLen)
       l = Math.ceil(keylen / hLen)
       r = keylen - (l - 1) * hLen
-
       if (keylen > (Math.pow(2, 32) - 1) * hLen)
         throw new TypeError('keylen exceeds maximum length')
     }
