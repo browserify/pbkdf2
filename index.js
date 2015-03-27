@@ -1,8 +1,9 @@
+var compat = require('./browser')
 var crypto = require('crypto')
 var fork = require('child_process').fork
 var path = require('path')
-var compat = require('./browser')
-var MAX_INT = Math.pow(2, 30) - 1 // default in iojs
+
+var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   if (typeof iterations !== 'number') {
@@ -17,7 +18,7 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
     throw new TypeError('Key length not a number')
   }
 
-  if (keylen < 0 || keylen > MAX_INT) {
+  if (keylen < 0 || keylen > MAX_ALLOC) {
     throw new TypeError('Bad key length')
   }
 

@@ -1,5 +1,5 @@
 var createHmac = require('create-hmac')
-var MAX_INT = Math.pow(2, 30) - 1 // default in iojs
+var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 exports.pbkdf2 = pbkdf2
 function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
@@ -32,7 +32,7 @@ function pbkdf2Sync (password, salt, iterations, keylen, digest) {
     throw new TypeError('Key length not a number')
   }
 
-  if (keylen < 0 || keylen > MAX_INT) {
+  if (keylen < 0 || keylen > MAX_ALLOC) {
     throw new TypeError('Bad key length')
   }
 
