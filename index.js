@@ -1,7 +1,9 @@
+var compat = require('./browser')
 var crypto = require('crypto')
 var fork = require('child_process').fork
 var path = require('path')
-var compat = require('./browser')
+
+var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   if (typeof iterations !== 'number') {
@@ -16,23 +18,26 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
     throw new TypeError('Key length not a number')
   }
 
-  if (keylen < 0) {
+  if (keylen < 0 || keylen > MAX_ALLOC) {
     throw new TypeError('Bad key length')
   }
-  if (typeof password === 'string')
-    password = new Buffer(password)
 
-  if (typeof salt === 'string')
-    salt = new Buffer(salt)
+  if (typeof password === 'string') {
+    password = new Buffer(password, 'binary')
+  }
+
+  if (typeof salt === 'string') {
+    salt = new Buffer(salt, 'binary')
+  }
 
   var child = fork(path.resolve(__dirname, 'async-shim.js'))
 
   child.on('message', function (result) {
-    child.kill()
-    callback(null, new Buffer(result, 'hex'))
-  }).on('error', function (err) {
-    child.kill()
-    callback(err)
+    if (result.type === 'success') {
+      callback(null, new Buffer(result.data, 'hex'))
+    } else if (result.type === 'fail') {
+      callback(new TypeError(result.data))
+    }
   })
 
   child.send({
@@ -59,7 +64,7 @@ exports.pbkdf2Sync = function pbkdf2Sync (password, salt, iterations, keylen, di
 }
 
 exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
-  if (typeof digest ===  'function') {
+  if (typeof digest === 'function') {
     callback = digest
     digest = 'sha1'
   }
