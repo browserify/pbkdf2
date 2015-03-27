@@ -20,11 +20,14 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   if (keylen < 0 || keylen > MAX_INT) {
     throw new TypeError('Bad key length')
   }
-  if (typeof password === 'string')
-    password = new Buffer(password, 'binary')
 
-  if (typeof salt === 'string')
+  if (typeof password === 'string') {
+    password = new Buffer(password, 'binary')
+  }
+
+  if (typeof salt === 'string') {
     salt = new Buffer(salt, 'binary')
+  }
 
   var child = fork(path.resolve(__dirname, 'async-shim.js'))
 
@@ -60,7 +63,7 @@ exports.pbkdf2Sync = function pbkdf2Sync (password, salt, iterations, keylen, di
 }
 
 exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
-  if (typeof digest ===  'function') {
+  if (typeof digest === 'function') {
     callback = digest
     digest = 'sha1'
   }
