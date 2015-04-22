@@ -15,7 +15,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
   setTimeout(function () {
     var result = pbkdf2Sync(password, salt, iterations, keylen, digest)
     
-    callback(undefined, result)
+    callback(null, result)
   })
 }
 
