@@ -8,7 +8,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
     digest = undefined
   }
 
-  testParams(iterations, keylen)
+  checkParameters(iterations, keylen)
 
   if (typeof callback !== 'function') {
     throw new Error('No callback provided to pbkdf2')
@@ -16,12 +16,12 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
 
   setTimeout(function () {
     var result = pbkdf2Sync(password, salt, iterations, keylen, digest)
-    
+
     callback(null, result)
   })
 }
 
-function testParams(iterations, keylen) {
+function checkParameters(iterations, keylen) {
   if (typeof iterations !== 'number') {
     throw new TypeError('Iterations not a number')
   }
@@ -41,7 +41,7 @@ function testParams(iterations, keylen) {
 
 exports.pbkdf2Sync = pbkdf2Sync
 function pbkdf2Sync (password, salt, iterations, keylen, digest) {
-  testParams(iterations, keylen)
+  checkParameters(iterations, keylen)
 
   digest = digest || 'sha1'
 
