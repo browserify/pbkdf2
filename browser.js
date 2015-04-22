@@ -12,8 +12,9 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
     throw new Error('No callback provided to pbkdf2')
   }
 
-  var result = pbkdf2Sync(password, salt, iterations, keylen, digest)
   setTimeout(function () {
+    var result = pbkdf2Sync(password, salt, iterations, keylen, digest)
+    
     callback(undefined, result)
   })
 }
