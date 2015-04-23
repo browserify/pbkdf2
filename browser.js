@@ -14,14 +14,62 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
     throw new Error('No callback provided to pbkdf2')
   }
 
-  setTimeout(function () {
-    var result = pbkdf2Sync(password, salt, iterations, keylen, digest)
+  digest = digest || 'sha1'
 
-    callback(null, result)
-  })
+  if (!Buffer.isBuffer(password)) password = new Buffer(password, 'binary')
+  if (!Buffer.isBuffer(salt)) salt = new Buffer(salt, 'binary')
+
+  var hLen
+  var l = 1
+  var DK = new Buffer(keylen)
+  var block1 = new Buffer(salt.length + 4)
+  salt.copy(block1, 0, 0, salt.length)
+
+  var r
+  var T
+  var U
+
+  var i = 1
+
+  setTimeout(round)
+  function round () {
+    block1.writeUInt32BE(i, salt.length)
+    U = createHmac(digest, password).update(block1).digest()
+
+    if (!hLen) {
+      hLen = U.length
+      T = new Buffer(hLen)
+      l = Math.ceil(keylen / hLen)
+      r = keylen - (l - 1) * hLen
+    }
+
+    U.copy(T, 0, 0, hLen)
+    setTimeout(loop, 0, 1)
+  }
+  function loop (j) {
+    while (j < iterations) {
+      U = createHmac(digest, password).update(U).digest()
+
+      for (var k = 0; k < hLen; k++) {
+        T[k] ^= U[k]
+      }
+      j++
+
+      if (!(j % 1000)) return setTimeout(loop, 0, j)
+    }
+    var destPos = (i - 1) * hLen
+    var len = (i === l ? r : hLen)
+    T.copy(DK, destPos, 0, len)
+    if (i <= l) {
+      i++
+      setTimeout(round)
+    } else {
+      callback(null, DK)
+    }
+  }
 }
 
-function checkParameters(iterations, keylen) {
+function checkParameters (iterations, keylen) {
   if (typeof iterations !== 'number') {
     throw new TypeError('Iterations not a number')
   }
