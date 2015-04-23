@@ -60,7 +60,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
     var destPos = (i - 1) * hLen
     var len = (i === l ? r : hLen)
     T.copy(DK, destPos, 0, len)
-    if (i <= l) {
+    if (i < l) {
       i++
       setTimeout(round)
     } else {
