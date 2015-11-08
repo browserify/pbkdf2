@@ -10,8 +10,8 @@ This library provides the functionality of PBKDF2 with the ability to use any su
 ## Usage
 
 ```
-var pbkd2f = require('pbkd2f')
-var derivedKey = pbkd2f.pbkdf2Sync('password', 'salt', 1, 32, 'sha512')
+var pbkdf2 = require('pbkdf2')
+var derivedKey = pbkdf2.pbkdf2Sync('password', 'salt', 1, 32, 'sha512')
 
 ...
 ```
