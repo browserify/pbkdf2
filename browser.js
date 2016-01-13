@@ -32,6 +32,7 @@ exports.pbkdf2Sync = function (password, salt, iterations, keylen, digest) {
 
   digest = digest || 'sha1'
 
+  var destPos = 0
   var hLen
   var l = 1
   var DK = new Buffer(keylen)
@@ -59,9 +60,9 @@ exports.pbkdf2Sync = function (password, salt, iterations, keylen, digest) {
       for (var k = 0; k < hLen; k++) T[k] ^= U[k]
     }
 
-    var destPos = (i - 1) * hLen
     var len = (i === l ? r : hLen)
     T.copy(DK, destPos, 0, len)
+    destPos += hLen
   }
 
   return DK
