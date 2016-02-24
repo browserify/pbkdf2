@@ -49,44 +49,36 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
   })
 }
 
-exports.pbkdf2Sync = function pbkdf2Sync (password, salt, iterations, keylen, digest) {
-  digest = digest || 'sha1'
+// node <= 0.10 supports only sha1 for pbkdf2
+var isOldNode = (function () {
+  var sha1 = '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164'
+  return crypto.pbkdf2Sync('password', 'salt', 1, 32, 'sha256').toString('hex') === sha1
+})()
 
-  if (isNode10()) {
+if (isOldNode) {
+  exports.pbkdf2Sync = function pbkdf2Sync (password, salt, iterations, keylen, digest) {
+    digest = digest || 'sha1'
+
     if (digest === 'sha1') {
       return crypto.pbkdf2Sync(password, salt, iterations, keylen)
     } else {
       return compat.pbkdf2Sync(password, salt, iterations, keylen, digest)
     }
-  } else {
-    return crypto.pbkdf2Sync(password, salt, iterations, keylen, digest)
-  }
-}
-
-exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
-  if (typeof digest === 'function') {
-    callback = digest
-    digest = 'sha1'
   }
 
-  if (isNode10()) {
+  exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
+    if (typeof digest === 'function') {
+      callback = digest
+      digest = 'sha1'
+    }
+
     if (digest === 'sha1') {
       return crypto.pbkdf2(password, salt, iterations, keylen, callback)
     } else {
       return asyncPBKDF2(password, salt, iterations, keylen, digest, callback)
     }
-  } else {
-    return crypto.pbkdf2(password, salt, iterations, keylen, digest, callback)
   }
-}
-
-var sha1 = '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164'
-var isNode10Result
-
-function isNode10 () {
-  if (typeof isNode10Result === 'undefined') {
-    isNode10Result = crypto.pbkdf2Sync('password', 'salt', 1, 32, 'sha256').toString('hex') === sha1
-  }
-
-  return isNode10Result
+} else {
+  exports.pbkdf2Sync = crypto.pbkdf2Sync
+  exports.pbkdf2 = crypto.pbkdf2
 }
