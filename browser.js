@@ -21,7 +21,7 @@ function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
   })
 }
 
-function checkParameters(iterations, keylen) {
+function checkParameters (iterations, keylen) {
   if (typeof iterations !== 'number') {
     throw new TypeError('Iterations not a number')
   }
