@@ -18,7 +18,7 @@ function asyncPBKDF2 (password, salt, iterations, keylen, digest, callback) {
     throw new TypeError('Key length not a number')
   }
 
-  if (keylen < 0 || keylen > MAX_ALLOC) {
+  if (keylen < 0 || keylen > MAX_ALLOC || isNaN(keylen)) {
     throw new TypeError('Bad key length')
   }
 

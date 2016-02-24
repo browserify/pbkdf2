@@ -34,7 +34,7 @@ function checkParameters (iterations, keylen) {
     throw new TypeError('Key length not a number')
   }
 
-  if (keylen < 0 || keylen > MAX_ALLOC) {
+  if (keylen < 0 || keylen > MAX_ALLOC || isNaN(keylen)) {
     throw new TypeError('Bad key length')
   }
 }
