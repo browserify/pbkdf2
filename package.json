@@ -3,6 +3,11 @@
   "version": "3.0.4",
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
   "main": "./index.js",
+  "files": [
+    "async-shim.js",
+    "browser.js",
+    "index.js"
+  ],
   "browser": "./browser.js",
   "keywords": [
     "pbkdf2",
