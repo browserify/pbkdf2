@@ -1,4 +1,4 @@
-var createHmac = require('create-hmac')
+var createHmac = require('create-hmac/browser')
 var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
 
 exports.pbkdf2 = pbkdf2
