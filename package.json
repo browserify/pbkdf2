@@ -6,7 +6,8 @@
   "files": [
     "async-shim.js",
     "browser.js",
-    "index.js"
+    "index.js",
+    "node-shim.js"
   ],
   "browser": "./browser.js",
   "keywords": [
