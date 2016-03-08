@@ -1,23 +1,5 @@
 var createHmac = require('create-hmac')
-
-var MAX_ALLOC = Math.pow(2, 30) - 1 // default in iojs
-exports._checkParameters = function (iterations, keylen) {
-  if (typeof iterations !== 'number') {
-    throw new TypeError('Iterations not a number')
-  }
-
-  if (iterations < 0) {
-    throw new TypeError('Bad iterations')
-  }
-
-  if (typeof keylen !== 'number') {
-    throw new TypeError('Key length not a number')
-  }
-
-  if (keylen < 0 || keylen > MAX_ALLOC || keylen !== keylen) { /* eslint no-self-compare: 0 */
-    throw new TypeError('Bad key length')
-  }
-}
+var checkParameters = require('./precondition')
 
 exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback) {
   if (typeof digest === 'function') {
@@ -25,7 +7,7 @@ exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback)
     digest = undefined
   }
 
-  exports._checkParameters(iterations, keylen)
+  checkParameters(iterations, keylen)
   if (typeof callback !== 'function') throw new Error('No callback provided to pbkdf2')
 
   setTimeout(function () {
@@ -37,7 +19,7 @@ exports.pbkdf2Sync = function (password, salt, iterations, keylen, digest) {
   if (!Buffer.isBuffer(password)) password = new Buffer(password, 'binary')
   if (!Buffer.isBuffer(salt)) salt = new Buffer(salt, 'binary')
 
-  exports._checkParameters(iterations, keylen)
+  checkParameters(iterations, keylen)
 
   digest = digest || 'sha1'
 

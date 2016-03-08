@@ -2,6 +2,7 @@ var crypto = require('crypto')
 var fork = require('child_process').fork
 var path = require('path')
 var browser = require('./browser')
+var checkParameters = require('./precondition')
 
 var isShimRequired = null
 exports.isShimRequired = function () {
@@ -30,7 +31,7 @@ exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, ca
   if (!Buffer.isBuffer(password)) password = new Buffer(password, 'binary')
   if (!Buffer.isBuffer(salt)) salt = new Buffer(salt, 'binary')
 
-  browser._checkParameters(iterations, keylen)
+  checkParameters(iterations, keylen)
   var child = fork(path.resolve(__dirname, 'async-shim.js'))
 
   child.on('message', function (result) {
