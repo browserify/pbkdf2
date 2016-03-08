@@ -32,7 +32,7 @@ exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, ca
   if (!Buffer.isBuffer(salt)) salt = new Buffer(salt, 'binary')
 
   checkParameters(iterations, keylen)
-  var child = fork(path.resolve(__dirname, 'async-shim.js'))
+  var child = fork(path.resolve(__dirname, 'node-shim-async.js'))
 
   child.on('message', function (result) {
     if (result.type === 'success') {

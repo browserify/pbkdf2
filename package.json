@@ -4,9 +4,9 @@
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
   "main": "./index.js",
   "files": [
-    "async-shim.js",
     "browser.js",
     "index.js",
+    "node-shim-async.js",
     "node-shim.js",
     "precondition.js"
   ],
