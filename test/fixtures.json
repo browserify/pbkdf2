@@ -152,6 +152,13 @@
       "iterations": 1,
       "dkLen": "NaN",
       "exception": "Key length not a number"
+    },
+    {
+      "key": "password",
+      "salt": "salt",
+      "iterations": 1,
+      "dkLen": -1,
+      "exception": "Bad key length"
     }
   ]
 }

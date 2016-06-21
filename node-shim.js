@@ -14,12 +14,14 @@ exports.isShimRequired = function () {
   return isShimRequired
 }
 
+/* istanbul ignore next */
 exports.pbkdf2Sync = function pbkdf2Sync (password, salt, iterations, keylen, digest) {
   digest = digest || 'sha1'
   if (digest === 'sha1') return crypto.pbkdf2Sync(password, salt, iterations, keylen)
   return browser.pbkdf2Sync(password, salt, iterations, keylen, digest)
 }
 
+/* istanbul ignore next */
 exports.pbkdf2 = function pbkdf2 (password, salt, iterations, keylen, digest, callback) {
   if (typeof digest === 'function') {
     callback = digest
