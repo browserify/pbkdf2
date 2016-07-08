@@ -18,6 +18,8 @@ var derivedKey = pbkdf2.pbkdf2Sync('password', 'salt', 1, 32, 'sha512')
 ...
 ```
 
+For more information on the API,  please see the relevant [Node documentation](https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_digest_callback).
+
 
 ## Credits
 
