@@ -96,8 +96,9 @@ function runTests (name, compat) {
       var key = f.key || new Buffer(f.keyHex, 'hex')
       var salt = f.salt || new Buffer(f.saltHex, 'hex')
       var expected = f.results[algorithm]
+      var description = algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected
 
-      tape('pbkdf2 w/ ' + algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected, function (t) {
+      tape(name + ' async w/ ' + description, function (t) {
         t.plan(2)
 
         compat.pbkdf2(key, salt, f.iterations, f.dkLen, algorithm, function (err, result) {
@@ -105,24 +106,8 @@ function runTests (name, compat) {
           t.equal(result.toString('hex'), expected)
         })
       })
-    })
 
-    fixtures.invalid.forEach(function (f) {
-      tape('pbkdf2 w/ ' + algorithm + ' should throw ' + f.exception, function (t) {
-        t.plan(1)
-
-        t.throws(function () {
-          compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, function () {})
-        }, new RegExp(f.exception))
-      })
-    })
-
-    fixtures.valid.forEach(function (f) {
-      var key = f.key || new Buffer(f.keyHex, 'hex')
-      var salt = f.salt || new Buffer(f.saltHex, 'hex')
-      var expected = f.results[algorithm]
-
-      tape('pbkdf2Sync w/ ' + algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected, function (t) {
+      tape(name + 'sync w/ ' + description, function (t) {
         t.plan(1)
 
         var result = compat.pbkdf2Sync(key, salt, f.iterations, f.dkLen, algorithm)
@@ -131,8 +116,19 @@ function runTests (name, compat) {
     })
 
     fixtures.invalid.forEach(function (f) {
-      tape('pbkdf2Sync w/' + algorithm + ' should throw ' + f.exception, function (t) {
+      var description = algorithm + ' should throw ' + f.exception
+
+      tape(name + ' async w/ ' + description, function (t) {
         t.plan(1)
+
+        t.throws(function () {
+          compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, function () {})
+        }, new RegExp(f.exception))
+      })
+
+      tape(name + ' sync w/' + description, function (t) {
+        t.plan(1)
+
         t.throws(function () {
           compat.pbkdf2Sync(f.key, f.salt, f.iterations, f.dkLen, f.algo)
         }, new RegExp(f.exception))
