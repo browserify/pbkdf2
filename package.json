@@ -2,7 +2,18 @@
   "name": "pbkdf2",
   "version": "3.0.4",
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
-  "main": "./index.js",
+  "keywords": [
+    "pbkdf2",
+    "kdf",
+    "salt",
+    "hash"
+  ],
+  "homepage": "https://github.com/crypto-browserify/pbkdf2",
+  "bugs": {
+    "url": "https://github.com/crypto-browserify/pbkdf2/issues"
+  },
+  "license": "MIT",
+  "author": "Daniel Cousens",
   "files": [
     "browser.js",
     "index.js",
@@ -10,36 +21,23 @@
     "node-shim.js",
     "precondition.js"
   ],
-  "browser": "./browser.js",
-  "keywords": [
-    "pbkdf2",
-    "kdf",
-    "salt",
-    "hash"
-  ],
-  "scripts": {
-    "coverage": "istanbul cover _mocha -- -t 20000 test/index.js",
-    "coveralls": "npm run coverage && coveralls < coverage/lcov.info",
-    "standard": "standard",
-    "test": "mocha --reporter list -t 20000 test/index.js",
-    "bundle-test": "browserify test/index.js > test/bundle.js"
-  },
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/crypto-browserify/pbkdf2.git"
   },
-  "author": "Daniel Cousens",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/crypto-browserify/pbkdf2/issues"
+  "scripts": {
+    "prepublish": "npm run test",
+    "coverage": "nyc --check-coverage --branches 100 --functions 100 tape test/*.js",
+    "lint": "standard",
+    "test": "npm run lint && npm run unit",
+    "bundle-test": "browserify test/index.js > test/bundle.js",
+    "unit": "tape test/*.js"
   },
-  "homepage": "https://github.com/crypto-browserify/pbkdf2",
   "devDependencies": {
-    "browserify": "^8.1.1",
-    "coveralls": "^2.11.2",
-    "istanbul": "^0.3.5",
-    "mocha": "^2.1.0",
-    "standard": "^6.0.7"
+    "nyc": "^6.4.0",
+    "standard": "*",
+    "tape": "^4.5.1"
   },
   "dependencies": {
     "create-hmac": "^1.1.2"
