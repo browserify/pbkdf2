@@ -36,6 +36,7 @@
     "unit": "tape test/*.js"
   },
   "devDependencies": {
+    "browserify": "*",
     "nyc": "^6.4.0",
     "standard": "*",
     "tape": "^4.5.1"
