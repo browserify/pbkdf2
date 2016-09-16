@@ -1,6 +1,5 @@
 var createHmac = require('create-hmac')
 var checkParameters = require('./precondition')
-var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
 
 exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback) {
   if (typeof digest === 'function') {
@@ -16,7 +15,14 @@ exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback)
   })
 }
 
-var defaultEncoding = (process.browser || pVersionMajor >= 6) ? 'utf-8' : 'binary'
+var defaultEncoding
+if (process.browser) {
+  defaultEncoding = 'utf-8'
+} else {
+  var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
+
+  defaultEncoding = pVersionMajor >= 6 ? 'utf-8' : 'binary'
+}
 
 exports.pbkdf2Sync = function (password, salt, iterations, keylen, digest) {
   if (!Buffer.isBuffer(password)) password = new Buffer(password, defaultEncoding)
