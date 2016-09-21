@@ -48,5 +48,10 @@
     "ignore": [
       "test/bundle.js"
     ]
+  },
+  {
+    "engines" : {
+      "node" : ">=0.12"
+    }
   }
 }
