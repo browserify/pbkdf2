@@ -49,9 +49,7 @@
       "test/bundle.js"
     ]
   },
-  {
-    "engines" : {
-      "node" : ">=0.12"
-    }
+  "engines" : {
+    "node" : ">=0.12"
   }
 }
