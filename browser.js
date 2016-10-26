@@ -1,4 +1,5 @@
 var createHmac = require('create-hmac')
+var process = require('process')
 var checkParameters = require('./precondition')
 
 exports.pbkdf2 = function (password, salt, iterations, keylen, digest, callback) {
