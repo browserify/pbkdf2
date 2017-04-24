@@ -1,8 +1,15 @@
 var checkParameters = require('./precondition')
 var defaultEncoding = require('./default-encoding')
 var sync = require('./sync')
-const ZERO_BUF = new Buffer(8)
-ZERO_BUF.fill(0)
+function zeroFill(num) {
+  if (Buffer.alloc) {
+    return Buffer.alloc(num);
+  }
+  var out = new Buffer(num)
+  out.fill(0)
+  return out
+}
+var ZERO_BUF
 var subtle = global.crypto && global.crypto.subtle
 var toBrowser = {
   'sha': 'SHA-1',
@@ -26,6 +33,7 @@ function checkNative (algo) {
   if (checks[algo] !== undefined) {
     return checks[algo]
   }
+  ZERO_BUF = ZERO_BUF || zeroFill(8)
   let prom = browserPbkdf2(ZERO_BUF, ZERO_BUF, 10, 128, algo)
     .then(function () {
       return true
@@ -36,7 +44,6 @@ function checkNative (algo) {
   return prom
 }
 function browserPbkdf2 (password, salt, iterations, length, algo) {
-  console.log('native')
   return subtle.importKey(
     'raw', password, {
       name: 'PBKDF2'
@@ -79,7 +86,6 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
   var algo = toBrowser[digest.toLowerCase()]
   if (!algo) {
     return resolvePromise(new Promise(function (resolve) {
-      console.log('bad algo', digest)
       resolve(sync(password, salt, iterations, keylen, digest))
     }), callback)
   }
@@ -87,7 +93,6 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
     if (resp) {
       return browserPbkdf2(password, salt, iterations, keylen, algo)
     } else {
-      console.log('not native')
       return sync(password, salt, iterations, keylen, digest)
     }
   }), callback)
