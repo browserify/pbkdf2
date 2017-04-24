@@ -1,4 +1,4 @@
 
-exports.pbkdf2 = require('./async')
+exports.pbkdf2 = require('./lib/async')
 
-exports.pbkdf2Sync = require('./sync')
+exports.pbkdf2Sync = require('./lib/sync')
