@@ -122,9 +122,10 @@ function runTests (name, compat) {
 
       tape(name + ' async w/ ' + description, function (t) {
         t.plan(1)
-
+        /*istanbul ignore next */
+        function noop () {}
         t.throws(function () {
-          compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, function () {})
+          compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, noop)
         }, new RegExp(f.exception))
       })
 
@@ -147,6 +148,8 @@ function runTests (name, compat) {
 }
 
 runTests('JavaScript pbkdf2', require('../browser'))
+
+/* istanbul ignore next */
 if (!process.browser) {
   runTests('node pbkdf2', require('../'))
 }
