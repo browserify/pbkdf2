@@ -122,7 +122,7 @@ function runTests (name, compat) {
 
       tape(name + ' async w/ ' + description, function (t) {
         t.plan(1)
-        /*istanbul ignore next */
+        /* istanbul ignore next */
         function noop () {}
         t.throws(function () {
           compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, noop)
