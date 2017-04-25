@@ -26,3 +26,4 @@ node_modules
 
 # build artifact
 test/bundle.js
+.nyc_output

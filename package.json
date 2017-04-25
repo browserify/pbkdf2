@@ -42,7 +42,8 @@
     "tape": "^4.5.1"
   },
   "dependencies": {
-    "create-hmac": "^1.1.2"
+    "create-hmac": "^1.1.2",
+    "safe-buffer": "^5.0.1"
   },
   "standard": {
     "ignore": [
@@ -51,5 +52,11 @@
   },
   "engines": {
     "node": ">=0.12"
+  },
+  "nyc": {
+    "exclude": [
+      "lib/async.js",
+      "test/bundle.js"
+    ]
   }
 }
