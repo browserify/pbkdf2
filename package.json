@@ -52,5 +52,11 @@
   },
   "engines": {
     "node": ">=0.12"
+  },
+  "nyc": {
+    "exclude": [
+      "lib/async.js",
+      "pbkdf2/test/bundle.js"
+    ]
   }
 }
