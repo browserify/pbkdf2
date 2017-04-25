@@ -4,6 +4,7 @@
 // https://stackoverflow.com/questions/15593184/pbkdf2-hmac-sha-512-test-vectors
 var fixtures = require('./fixtures')
 var tape = require('tape')
+var Buffer = require('safe-buffer').Buffer
 
 var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
 if (pVersionMajor !== 4 || process.browser) {
@@ -76,7 +77,7 @@ function runTests (name, compat) {
   tape(name + ' defaults to sha1 and handles buffers', function (t) {
     t.plan(2)
 
-    compat.pbkdf2(new Buffer('password'), new Buffer('salt'), 1, 32, function (err, result) {
+    compat.pbkdf2(Buffer.from('password'), Buffer.from('salt'), 1, 32, function (err, result) {
       t.error(err)
       t.equal(result.toString('hex'), '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164')
     })
@@ -93,8 +94,8 @@ function runTests (name, compat) {
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512']
   algos.forEach(function (algorithm) {
     fixtures.valid.forEach(function (f) {
-      var key = f.key || new Buffer(f.keyHex, 'hex')
-      var salt = f.salt || new Buffer(f.saltHex, 'hex')
+      var key = f.key || Buffer.from(f.keyHex, 'hex')
+      var salt = f.salt || Buffer.from(f.saltHex, 'hex')
       var expected = f.results[algorithm]
       var description = algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected
 
