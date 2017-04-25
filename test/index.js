@@ -7,6 +7,7 @@ var tape = require('tape')
 var Buffer = require('safe-buffer').Buffer
 
 var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10)
+/* istanbul ignore next */
 if (pVersionMajor !== 4 || process.browser) {
   fixtures.invalid.push({
     'key': 'password',
@@ -22,7 +23,7 @@ if (pVersionMajor !== 4 || process.browser) {
     'exception': 'Bad key length'
   })
 }
-
+/* istanbul ignore next */
 if (pVersionMajor >= 5 || process.browser) {
   fixtures.invalid.push({
     'key': 'password',
@@ -38,7 +39,7 @@ if (pVersionMajor >= 5 || process.browser) {
     'exception': 'Bad key length'
   })
 }
-
+/* istanbul ignore next */
 if (pVersionMajor >= 6 || process.browser) {
   fixtures.valid.push({
     'description': 'Unicode salt, no truncation',

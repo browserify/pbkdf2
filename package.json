@@ -56,7 +56,7 @@
   "nyc": {
     "exclude": [
       "lib/async.js",
-      "pbkdf2/test/bundle.js"
+      "test/bundle.js"
     ]
   }
 }
