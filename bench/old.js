@@ -1,4 +1,4 @@
-var createHmac = require('create-hmac')
+var createHmac = require('create-hmac/browser')
 var checkParameters = require('../lib/precondition')
 var defaultEncoding = require('../lib/default-encoding')
 var Buffer = require('safe-buffer').Buffer
