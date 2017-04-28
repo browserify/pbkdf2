@@ -33,10 +33,13 @@
     "lint": "standard",
     "test": "npm run lint && npm run unit",
     "bundle-test": "browserify test/index.js > test/bundle.js",
-    "unit": "tape test/*.js"
+    "unit": "tape test/*.js",
+    "bench": "node bench/"
   },
   "devDependencies": {
+    "benchmark": "^2.1.4",
     "browserify": "*",
+    "microtime": "^2.1.3",
     "nyc": "^6.4.0",
     "standard": "*",
     "tape": "^4.5.1"
