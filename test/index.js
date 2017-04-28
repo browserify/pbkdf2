@@ -147,9 +147,15 @@ function runTests (name, compat) {
   })
 }
 
-runTests('JavaScript pbkdf2', require('../browser'))
+var browser = require('../browser')
+runTests('JavaScript pbkdf2', browser)
 
 /* istanbul ignore next */
 if (!process.browser) {
+  browser.pbkdf2Sync = require('../lib/sync-browser')
+  runTests('browser pbkdf2', {
+    pbkdf2: browser.pbkdf2,
+    pbkdf2Sync: require('../lib/sync-browser')
+  })
   runTests('node pbkdf2', require('../'))
 }
