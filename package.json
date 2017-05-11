@@ -1,6 +1,6 @@
 {
   "name": "pbkdf2",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
   "keywords": [
     "pbkdf2",
@@ -14,7 +14,9 @@
   },
   "license": "MIT",
   "author": "Daniel Cousens",
-  "browser": "browser.js",
+  "browser": {
+    "./lib/sync.js": "./lib/sync-browser.js"
+  },
   "files": [
     "browser.js",
     "index.js",
@@ -57,9 +59,6 @@
     "ignore": [
       "test/bundle.js"
     ]
-  },
-  "browser": {
-    "./lib/sync.js": "./lib/sync-browser.js"
   },
   "engines": {
     "node": ">=0.12"
