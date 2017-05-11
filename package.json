@@ -15,16 +15,13 @@
   "license": "MIT",
   "author": "Daniel Cousens",
   "browser": {
+    "./index.js": "./browser.js",
     "./lib/sync.js": "./lib/sync-browser.js"
   },
   "files": [
     "browser.js",
     "index.js",
-    "lib/async.js",
-    "lib/default-encoding.js",
-    "lib/precondition.js",
-    "lib/sync.js",
-    "lib/sync-browser.js"
+    "lib/"
   ],
   "main": "index.js",
   "repository": {
