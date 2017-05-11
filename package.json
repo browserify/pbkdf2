@@ -20,9 +20,11 @@
   "files": [
     "browser.js",
     "index.js",
-    "node-shim-async.js",
-    "node-shim.js",
-    "precondition.js"
+    "lib/async.js",
+    "lib/default-encoding.js",
+    "lib/precondition.js",
+    "lib/sync.js",
+    "lib/sync-browser.js"
   ],
   "main": "index.js",
   "repository": {
