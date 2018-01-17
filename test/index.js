@@ -76,7 +76,10 @@ if (pVersionMajor >= 6 || process.browser) {
 
 function runTests (name, compat) {
   tape(name + ' defaults to sha1 and handles buffers', function (t) {
-    t.plan(2)
+    t.plan(3)
+
+    var resultSync = compat.pbkdf2Sync('password', 'salt', 1, 32)
+    t.equal(resultSync.toString('hex'), '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164')
 
     compat.pbkdf2(Buffer.from('password'), Buffer.from('salt'), 1, 32, function (err, result) {
       t.error(err)
@@ -96,7 +99,7 @@ function runTests (name, compat) {
     t.plan(2)
 
     t.throws(function () {
-      compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1')
+      compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1', function () {})
     }, /Password must be a buffer or string/)
 
     t.throws(function () {
@@ -161,13 +164,6 @@ function runTests (name, compat) {
         }, new RegExp(f.exception))
       })
     })
-  })
-
-  tape('pbkdf2Sync defaults to sha1', function (t) {
-    t.plan(1)
-
-    var result = compat.pbkdf2Sync('password', 'salt', 1, 32)
-    t.equal(result.toString('hex'), '0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164')
   })
 }
 
