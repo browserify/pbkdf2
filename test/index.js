@@ -92,6 +92,30 @@ function runTests (name, compat) {
     }, /No callback provided to pbkdf2/)
   })
 
+  tape(name + ' should throw if the password is not a buffer or string', function (t) {
+    t.plan(2)
+
+    t.throws(function () {
+      compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1')
+    }, /Password must be a buffer or string/)
+
+    t.throws(function () {
+      compat.pbkdf2Sync(['a'], 'salt', 1, 32, 'sha1')
+    }, /Password must be a buffer or string/)
+  })
+
+  tape(name + ' should throw if the salt is not a buffer or string', function (t) {
+    t.plan(2)
+
+    t.throws(function () {
+      compat.pbkdf2('pass', ['salt'], 1, 32, 'sha1')
+    }, /Salt must be a buffer or string/)
+
+    t.throws(function () {
+      compat.pbkdf2Sync('pass', ['salt'], 1, 32, 'sha1')
+    }, /Salt must be a buffer or string/)
+  })
+
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512']
   algos.forEach(function (algorithm) {
     fixtures.valid.forEach(function (f) {
