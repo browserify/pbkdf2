@@ -13,20 +13,23 @@ function run (password, salt, iterations, keylen, digest) {
   console.log(`iterations: ${iterations}`)
   console.log(`keylen: ${keylen}`)
   console.log(`digest: ${digest}`)
+
   // add tests
   suite
-  .add('current', function () {
-    current(password, salt, iterations, keylen, digest)
-  })
-  .add('old', function () {
-    old(password, salt, iterations, keylen, digest)
-  })
-  // add listeners
-  .on('cycle', function (event) {
-    console.log(String(event.target))
-  })
-  .on('complete', function () {
-    console.log('Fastest is ' + this.filter('fastest').map('name'))
-    console.log('')
-  }).run()
+    .add('current', function () {
+      current(password, salt, iterations, keylen, digest)
+    })
+    .add('old', function () {
+      old(password, salt, iterations, keylen, digest)
+    })
+
+    // add listeners
+    .on('cycle', function (event) {
+      console.log(String(event.target))
+    })
+    .on('complete', function () {
+      console.log('Fastest is ' + this.filter('fastest').map('name'))
+      console.log('')
+    })
+    .run()
 }
