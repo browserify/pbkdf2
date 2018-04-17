@@ -32,7 +32,7 @@
     "prepublish": "npm run test",
     "coverage-report": "nyc report --reporter=lcov",
     "coverage-html": "nyc report --reporter=html",
-    "coverage": "nyc --check-coverage --branches 90 --functions 100 tape test/*.js",
+    "coverage": "nyc --check-coverage --branches 95 --functions 95 tape test/*.js",
     "lint": "standard",
     "test": "npm run lint && npm run unit",
     "bundle-test": "browserify test/index.js > test/bundle.js",
