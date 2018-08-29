@@ -97,7 +97,7 @@ function runTests (name, compat) {
     }, /No callback provided to pbkdf2/)
   })
 
-  tape(name + ' should throw if the password is not a buffer or string', function (t) {
+  tape(name + ' should throw if the password is not a buffer or string or Uint8Array', function (t) {
     t.plan(2)
 
     t.throws(function () {
@@ -109,7 +109,7 @@ function runTests (name, compat) {
     }, /Password must be a buffer or string/)
   })
 
-  tape(name + ' should throw if the salt is not a buffer or string', function (t) {
+  tape(name + ' should throw if the salt is not a buffer or string or Uint8Array', function (t) {
     t.plan(2)
 
     t.throws(function () {
@@ -124,8 +124,16 @@ function runTests (name, compat) {
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160']
   algos.forEach(function (algorithm) {
     fixtures.valid.forEach(function (f) {
-      var key = f.key || Buffer.from(f.keyHex, 'hex')
-      var salt = f.salt || Buffer.from(f.saltHex, 'hex')
+      if (f.keyuint8) {
+        var key = new Uint8Array(f.keyuint8)
+      } else {
+        var key = f.key || Buffer.from(f.keyHex, 'hex')
+      }
+      if (f.saltuint8) {
+        var salt = new Uint8Array(f.saltuint8)
+      } else {
+        var salt = f.salt || Buffer.from(f.saltHex, 'hex')
+      }
       var expected = f.results[algorithm]
       var description = algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected
 
