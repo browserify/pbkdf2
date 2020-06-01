@@ -102,11 +102,11 @@ function runTests (name, compat) {
 
     t.throws(function () {
       compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1', function () {})
-    }, /Password must be a buffer or string/)
+    }, /Password must be a Buffer, Uint8Array or string/)
 
     t.throws(function () {
       compat.pbkdf2Sync(['a'], 'salt', 1, 32, 'sha1')
-    }, /Password must be a buffer or string/)
+    }, /Password must be a Buffer, Uint8Array or string/)
   })
 
   tape(name + ' should throw if the salt is not a buffer or string or Uint8Array', function (t) {
@@ -114,11 +114,11 @@ function runTests (name, compat) {
 
     t.throws(function () {
       compat.pbkdf2('pass', ['salt'], 1, 32, 'sha1')
-    }, /Salt must be a buffer or string/)
+    }, /Salt must be a Buffer, Uint8Array or string/)
 
     t.throws(function () {
       compat.pbkdf2Sync('pass', ['salt'], 1, 32, 'sha1')
-    }, /Salt must be a buffer or string/)
+    }, /Salt must be a Buffer, Uint8Array or string/)
   })
 
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160']
@@ -126,14 +126,14 @@ function runTests (name, compat) {
     fixtures.valid.forEach(function (f) {
       var key, salt
       if (f.keyUint8Array) {
-        key = new Uint8Array(f.keyuint8)
+        key = new Uint8Array(f.keyUint8Array)
       } else if (f.keyHex) {
         key = Buffer.from(f.keyHex, 'hex')
       } else {
         key = f.key
       }
       if (f.saltUint8Array) {
-        salt = new Uint8Array(f.saltuint8)
+        salt = new Uint8Array(f.saltUint8Array)
       } else if (f.saltHex) {
         salt = Buffer.from(f.saltHex, 'hex')
       } else {
