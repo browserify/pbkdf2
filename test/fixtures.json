@@ -156,7 +156,7 @@
       }
     },
     {
-      "keyuint8": [112, 97, 115, 115, 119, 111, 114, 100],
+      "keyUint8Array": [112, 97, 115, 115, 119, 111, 114, 100],
       "salt": "salt",
       "iterations": 1,
       "dkLen": 32,
@@ -170,7 +170,7 @@
     },
     {
       "key": "password",
-      "saltuint8": [115, 97, 108, 116],
+      "saltUint8Array": [115, 97, 108, 116],
       "iterations": 1,
       "dkLen": 32,
       "results": {

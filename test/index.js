@@ -124,15 +124,20 @@ function runTests (name, compat) {
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160']
   algos.forEach(function (algorithm) {
     fixtures.valid.forEach(function (f) {
-      if (f.keyuint8) {
-        var key = new Uint8Array(f.keyuint8)
+      var key, salt
+      if (f.keyUint8Array) {
+        key = new Uint8Array(f.keyuint8)
+      } else if (f.keyHex) {
+        key = Buffer.from(f.keyHex, 'hex')
       } else {
-        var key = f.key || Buffer.from(f.keyHex, 'hex')
+        key = f.key
       }
-      if (f.saltuint8) {
-        var salt = new Uint8Array(f.saltuint8)
+      if (f.saltUint8Array) {
+        salt = new Uint8Array(f.saltuint8)
+      } else if (f.saltHex) {
+        salt = Buffer.from(f.saltHex, 'hex')
       } else {
-        var salt = f.salt || Buffer.from(f.saltHex, 'hex')
+        salt = f.salt
       }
       var expected = f.results[algorithm]
       var description = algorithm + ' encodes ' + key + ' (' + f.salt + ') with ' + algorithm + ' to ' + expected
