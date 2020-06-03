@@ -102,11 +102,11 @@ function runTests (name, compat) {
 
     t.throws(function () {
       compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1', function () {})
-    }, /Password must be a string or an ArrayBuffer/)
+    }, /Password must be a string, a Buffer, a typed array or a DataView/)
 
     t.throws(function () {
       compat.pbkdf2Sync(['a'], 'salt', 1, 32, 'sha1')
-    }, /Password must be a string or an ArrayBuffer/)
+    }, /Password must be a string, a Buffer, a typed array or a DataView/)
   })
 
   tape(name + ' should throw if the salt is not a string or an ArrayBuffer', function (t) {
@@ -114,11 +114,11 @@ function runTests (name, compat) {
 
     t.throws(function () {
       compat.pbkdf2('pass', ['salt'], 1, 32, 'sha1')
-    }, /Salt must be a string or an ArrayBuffer/)
+    }, /Salt must be a string, a Buffer, a typed array or a DataView/)
 
     t.throws(function () {
       compat.pbkdf2Sync('pass', ['salt'], 1, 32, 'sha1')
-    }, /Salt must be a string or an ArrayBuffer/)
+    }, /Salt must be a string, a Buffer, a typed array or a DataView/)
   })
 
   var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160']
