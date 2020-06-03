@@ -1,6 +1,5 @@
 {
-  "valid": [
-    {
+  "valid": [{
       "key": "password",
       "salt": "salt",
       "iterations": 1,
@@ -133,7 +132,7 @@
       "iterations": 1,
       "dkLen": 10,
       "results": {
-        "sha1":   "0c60c80f961f0e71f3a9",
+        "sha1": "0c60c80f961f0e71f3a9",
         "sha256": "120fb6cffcf8b32c43e7",
         "sha512": "867f70cf1ade02cff375",
         "sha224": "3c198cbdb9464b785796",
@@ -189,12 +188,12 @@
       "iterations": 1,
       "dkLen": 32,
       "results": {
-        "sha1": "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164",
-        "sha256": "120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b",
-        "sha512": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252",
-        "sha224": "3c198cbdb9464b7857966bd05b7bc92bc1cc4e6e63155d4e490557fd85989497",
-        "sha384": "c0e14f06e49e32d73f9f52ddf1d0c5c7191609233631dadd76a567db42b78676",
-        "ripemd160": "b725258b125e0bacb0e2307e34feb16a4d0d6aed6cb4b0eee458fc1829020428"
+        "sha1": "f260ccd0bbc8fe6773119b834feec48636b716caad4180a4d0af4f9aa67c646e",
+        "sha256": "9b4608f5eeab348f0b9d85a918b140706b24f275acf6829382dfee491015f9eb",
+        "sha512": "c44b8f26550fe6ca0a55bce54b4a75e9530398f32ec28b59d0fded996e95e3d5",
+        "sha224": "03d0c2b530ec6339e6418cb0f906e50591619be40aa8817aa9c7305d1773231c",
+        "sha384": "2e69d62ae8c21ebc2de45a885b488f65fb88dfa58aaa9c57dd1fcb9d1edce96a",
+        "ripemd160": "fc69276ba3f145492065feb0259b9edf68179f2023c95094e71ac7d01748018a"
       }
     },
     {
@@ -203,12 +202,12 @@
       "iterations": 1,
       "dkLen": 32,
       "results": {
-        "sha1": "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164",
-        "sha256": "120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b",
-        "sha512": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252",
-        "sha224": "3c198cbdb9464b7857966bd05b7bc92bc1cc4e6e63155d4e490557fd85989497",
-        "sha384": "c0e14f06e49e32d73f9f52ddf1d0c5c7191609233631dadd76a567db42b78676",
-        "ripemd160": "b725258b125e0bacb0e2307e34feb16a4d0d6aed6cb4b0eee458fc1829020428"
+        "sha1": "b297f1ea23008f10ba9d645961e4661109e804b10af26bea22c44244492d6252",
+        "sha256": "f678f0772894c079f21377d9ee1e76dd77b62dfc1f0575e6aa9eb030af7a356a",
+        "sha512": "7f8133f6937ae1d7e4a43c19aabd2de8308d5b833341281716a501334cdb2470",
+        "sha224": "ab66d29d3dacc731e44f091a7baa051926219cf493e8b9e3934cedfb215adc8b",
+        "sha384": "cf139d648cf63e9b85a3b9b8f23f4445b84d22201bc2544bc273a17d5dcb7b28",
+        "ripemd160": "26142e48fae1ad1c53be54823aadda2aa7d42f5524463fb1eff0efafa08edb9d"
       }
     },
     {
@@ -217,12 +216,12 @@
       "iterations": 1,
       "dkLen": 32,
       "results": {
-        "sha1": "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164",
-        "sha256": "120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b",
-        "sha512": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252",
-        "sha224": "3c198cbdb9464b7857966bd05b7bc92bc1cc4e6e63155d4e490557fd85989497",
-        "sha384": "c0e14f06e49e32d73f9f52ddf1d0c5c7191609233631dadd76a567db42b78676",
-        "ripemd160": "b725258b125e0bacb0e2307e34feb16a4d0d6aed6cb4b0eee458fc1829020428"
+        "sha1": "c2b17a7e98cc48690a92cd9f753a2c700229045905167571aa281aafe8230bba",
+        "sha256": "55d62579a083a6c14b886710f81b54f567d214d343af776e5e90c467ea81b821",
+        "sha512": "ded01ce343e2683d962fc74b7b5ceef525228f49393ce9353254f44e3dc7e9aa",
+        "sha224": "5f10a348d320c7555b972b8d7d45a363a91e1a82dea063c3ac495cfad74a8d89",
+        "sha384": "4b7f97dbadfd652e0579499d0e23607ec476ed4bea9d6f1740d0b110e2d08792",
+        "ripemd160": "f92080d972a649d98d91a53922863fc7b8076c54869e9885f9a804868ef752e0"
       }
     },
     {
@@ -231,17 +230,16 @@
       "iterations": 1,
       "dkLen": 32,
       "results": {
-        "sha1": "0c60c80f961f0e71f3a9b524af6012062fe037a6e0f0eb94fe8fc46bdc637164",
-        "sha256": "120fb6cffcf8b32c43e7225256c4f837a86548c92ccc35480805987cb70be17b",
-        "sha512": "867f70cf1ade02cff3752599a3a53dc4af34c7a669815ae5d513554e1c8cf252",
-        "sha224": "3c198cbdb9464b7857966bd05b7bc92bc1cc4e6e63155d4e490557fd85989497",
-        "sha384": "c0e14f06e49e32d73f9f52ddf1d0c5c7191609233631dadd76a567db42b78676",
-        "ripemd160": "b725258b125e0bacb0e2307e34feb16a4d0d6aed6cb4b0eee458fc1829020428"
+        "sha1": "f158b9edd28c16ad3b41e0e8197ec132a98c2ddea73b959f55ec9792e0b29d6f",
+        "sha256": "a6154d17480547a10212f75883509842f88f2ca5d6c1a2419646e47342051852",
+        "sha512": "b10c2ea742de7dd0525988761ee1733564c91380eeaa1b199f4fafcbf7144b0c",
+        "sha224": "29b315ac30c7d5e1640ca0f9e27b68a794fb9f950b8dd117129824f103ffb9db",
+        "sha384": "624b4ed6ad389b976fb7503e54a35109f249c29ac6eb8b56850152be21b3cb0e",
+        "ripemd160": "8999b9280207bc9c76cf25327aa352da26a683fac7a2adff17a39dcc4f4c3b5b"
       }
     }
   ],
-  "invalid": [
-    {
+  "invalid": [{
       "key": "password",
       "salt": "salt",
       "iterations": "NaN",
