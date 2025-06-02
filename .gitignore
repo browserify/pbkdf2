@@ -27,3 +27,8 @@ node_modules
 # build artifact
 test/bundle.js
 .nyc_output
+
+# Only apps should have lockfiles
+npm-shrinkwrap.json
+package-lock.json
+yarn.lock
