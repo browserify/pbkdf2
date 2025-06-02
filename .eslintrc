@@ -21,9 +21,7 @@
 		"curly": "warn",
 		"dot-notation": [2, { "allowKeywords": true, "allowPattern": "throws" }],
 		"func-style": "warn",
-		"function-paren-newline": "warn",
 		"id-denylist": "warn",
-		"indent": ["error", 2],
 		"max-params": "warn",
 		"max-statements-per-line": "warn",
 		"multiline-comment-style": "off",
@@ -33,7 +31,6 @@
 		"no-use-before-define": "warn",
 		"semi": ["error", "never"],
 		"sort-keys": "warn",
-		"space-before-function-paren": "warn",
 		"strict": "warn",
 	},
 
@@ -48,7 +45,6 @@
 			"rules": {
 				"curly": "warn",
 				"func-style": "warn",
-				"indent": ["error", 2],
 				"max-params": "warn",
 				"no-extra-parens": "warn",
 				"no-mixed-operators": "warn",
@@ -58,7 +54,6 @@
 				"prefer-arrow-callback": "off",
 				"prefer-template": "off",
 				"semi": ["error", "never"],
-				"space-before-function-paren": "warn",
 				"strict": "warn",
 			},
 		},
