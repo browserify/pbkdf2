@@ -4,10 +4,6 @@ var Benchmark = require('benchmark');
 var current = require('../lib/sync');
 var old = require('./old');
 
-run('hello', 'world', 100, 32, 'md5');
-run('hello', 'world', 100, 32, 'sha256');
-run('hello', 'world', 10000, 70, 'md5');
-run('hello', 'world', 10000, 70, 'sha256');
 function run(password, salt, iterations, keylen, digest) {
 	var suite = new Benchmark.Suite();
 	console.log(`password: ${password}`);
@@ -36,3 +32,8 @@ function run(password, salt, iterations, keylen, digest) {
 		})
 		.run();
 }
+
+run('hello', 'world', 100, 32, 'md5');
+run('hello', 'world', 100, 32, 'sha256');
+run('hello', 'world', 10000, 70, 'md5');
+run('hello', 'world', 10000, 70, 'sha256');

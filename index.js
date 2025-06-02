@@ -1,6 +1,6 @@
 'use strict';
 
-var native = require('crypto');
+var nativeImpl = require('crypto');
 
 var checkParameters = require('./lib/precondition');
 var defaultEncoding = require('./lib/default-encoding');
@@ -19,7 +19,7 @@ function nativePBKDF2(password, salt, iterations, keylen, digest, callback) {
 		throw new Error('No callback provided to pbkdf2');
 	}
 
-	return native.pbkdf2(password, salt, iterations, keylen, digest, callback);
+	return nativeImpl.pbkdf2(password, salt, iterations, keylen, digest, callback);
 }
 
 function nativePBKDF2Sync(password, salt, iterations, keylen, digest) {
@@ -27,11 +27,11 @@ function nativePBKDF2Sync(password, salt, iterations, keylen, digest) {
 	password = toBuffer(password, defaultEncoding, 'Password');
 	salt = toBuffer(salt, defaultEncoding, 'Salt');
 	digest = digest || 'sha1';
-	return native.pbkdf2Sync(password, salt, iterations, keylen, digest);
+	return nativeImpl.pbkdf2Sync(password, salt, iterations, keylen, digest);
 }
 
 /* istanbul ignore next */
-if (!native.pbkdf2Sync || native.pbkdf2Sync.toString().indexOf('keylen, digest') === -1) {
+if (!nativeImpl.pbkdf2Sync || nativeImpl.pbkdf2Sync.toString().indexOf('keylen, digest') === -1) {
 	/* eslint global-require: 0 */
 	exports.pbkdf2Sync = require('./lib/sync');
 	exports.pbkdf2 = require('./lib/async');

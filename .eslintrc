@@ -17,13 +17,10 @@
 	},
 
 	"rules": {
-		"consistent-return": "warn",
 		"func-style": "warn",
-		"id-denylist": "warn",
 		"max-params": "warn",
 		"multiline-comment-style": "off",
 		"no-param-reassign": "warn",
-		"no-use-before-define": "warn",
 		"sort-keys": "warn",
 	},
 
@@ -39,7 +36,6 @@
 				"func-style": "warn",
 				"max-params": "warn",
 				"no-param-reassign": "warn",
-				"no-use-before-define": "warn",
 				"no-var": "off",
 				"prefer-arrow-callback": "off",
 				"prefer-template": "off",
