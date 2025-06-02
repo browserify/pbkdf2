@@ -33,17 +33,19 @@
     "coverage-report": "nyc report --reporter=lcov",
     "coverage-html": "nyc report --reporter=html",
     "coverage": "nyc --check-coverage --branches 95 --functions 95 tape test/*.js",
-    "lint": "standard",
-    "test": "npm run lint && npm run unit",
+    "lint": "eslint --ext=js,mjs .",
+    "pretest": "npm run lint",
+    "tests-only": "tape test/*.js",
+    "test": "npm run tests-only",
     "bundle-test": "browserify test/index.js > test/bundle.js",
-    "unit": "tape test/*.js",
     "bench": "node bench/"
   },
   "devDependencies": {
+    "@ljharb/eslint-config": "^21.1.1",
     "benchmark": "^2.1.4",
     "browserify": "*",
+    "eslint": "=8.8.0",
     "nyc": "^6.4.0",
-    "standard": "*",
     "tape": "^4.5.1"
   },
   "dependencies": {
@@ -52,11 +54,6 @@
     "ripemd160": "^2.0.1",
     "safe-buffer": "^5.0.1",
     "sha.js": "^2.4.8"
-  },
-  "standard": {
-    "ignore": [
-      "test/bundle.js"
-    ]
   },
   "engines": {
     "node": ">=0.12"

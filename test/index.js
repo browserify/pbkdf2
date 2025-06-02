@@ -76,7 +76,7 @@ if (pVersionMajor >= 6 || process.browser) {
   })
 }
 
-function runTests (name, compat) {
+function runTests(name, compat) {
   tape(name + ' defaults to sha1 and handles buffers', function (t) {
     t.plan(3)
 
@@ -183,7 +183,7 @@ function runTests (name, compat) {
       tape(name + ' async w/ ' + description, function (t) {
         t.plan(1)
         /* istanbul ignore next */
-        function noop () {}
+        function noop() {}
         t.throws(function () {
           compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, noop)
         }, new RegExp(f.exception))
@@ -205,6 +205,7 @@ runTests('JavaScript pbkdf2', js)
 
 /* istanbul ignore next */
 if (!process.browser) {
+  /* eslint global-require: 0 */
   var browser = Object.assign({}, js)
   browser.pbkdf2Sync = require('../lib/sync-browser')
   runTests('browser pbkdf2', {
