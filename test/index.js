@@ -6,6 +6,7 @@
 // https://stackoverflow.com/questions/15593184/pbkdf2-hmac-sha-512-test-vectors
 var fixtures = require('./fixtures');
 var tape = require('tape');
+var satisfies = require('semver').satisfies;
 var Buffer = require('safe-buffer').Buffer;
 
 var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10);
@@ -125,80 +126,89 @@ function runTests(name, compat) {
 
 	var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160'];
 	algos.forEach(function (algorithm) {
-		fixtures.valid.forEach(function (f) {
-			var key, keyType, salt, saltType;
-			if (f.keyUint8Array) {
-				key = new Uint8Array(f.keyUint8Array);
-				keyType = 'Uint8Array';
-			} else if (f.keyInt32Array) {
-				key = new Int32Array(f.keyInt32Array);
-				keyType = 'Int32Array';
-			} else if (f.keyFloat64Array) {
-				key = new Float64Array(f.keyFloat64Array);
-				keyType = 'Float64Array';
-			} else if (f.keyHex) {
-				key = Buffer.from(f.keyHex, 'hex');
-				keyType = 'hex';
-			} else {
-				key = f.key;
-				keyType = 'string';
-			}
-			if (f.saltUint8Array) {
-				salt = new Uint8Array(f.saltUint8Array);
-				saltType = 'Uint8Array';
-			} else if (f.saltInt32Array) {
-				salt = new Int32Array(f.saltInt32Array);
-				saltType = 'Int32Array';
-			} else if (f.saltFloat64Array) {
-				salt = new Float64Array(f.saltFloat64Array);
-				saltType = 'Float64Array';
-			} else if (f.saltHex) {
-				salt = Buffer.from(f.saltHex, 'hex');
-				saltType = 'hex';
-			} else {
-				salt = f.salt;
-				saltType = 'string';
-			}
-			var expected = f.results[algorithm];
-			var description = algorithm + ' encodes "' + key + '" (' + keyType + ') with salt "' + salt + '" (' + saltType + ') with ' + algorithm + ' to ' + expected;
+		var isUnsupported = satisfies(process.version, '^17') && algorithm === 'ripemd160';
+		tape(
+			name + ' + ' + algorithm,
+			{ skip: isUnsupported && 'this node version does not support ' + algorithm },
+			function (t) {
+				fixtures.valid.forEach(function (f) {
+					var key, keyType, salt, saltType;
+					if (f.keyUint8Array) {
+						key = new Uint8Array(f.keyUint8Array);
+						keyType = 'Uint8Array';
+					} else if (f.keyInt32Array) {
+						key = new Int32Array(f.keyInt32Array);
+						keyType = 'Int32Array';
+					} else if (f.keyFloat64Array) {
+						key = new Float64Array(f.keyFloat64Array);
+						keyType = 'Float64Array';
+					} else if (f.keyHex) {
+						key = Buffer.from(f.keyHex, 'hex');
+						keyType = 'hex';
+					} else {
+						key = f.key;
+						keyType = 'string';
+					}
+					if (f.saltUint8Array) {
+						salt = new Uint8Array(f.saltUint8Array);
+						saltType = 'Uint8Array';
+					} else if (f.saltInt32Array) {
+						salt = new Int32Array(f.saltInt32Array);
+						saltType = 'Int32Array';
+					} else if (f.saltFloat64Array) {
+						salt = new Float64Array(f.saltFloat64Array);
+						saltType = 'Float64Array';
+					} else if (f.saltHex) {
+						salt = Buffer.from(f.saltHex, 'hex');
+						saltType = 'hex';
+					} else {
+						salt = f.salt;
+						saltType = 'string';
+					}
+					var expected = f.results[algorithm];
+					var description = algorithm + ' encodes "' + key + '" (' + keyType + ') with salt "' + salt + '" (' + saltType + ') with ' + algorithm + ' to ' + expected;
 
-			tape(name + ' async w/ ' + description, function (t) {
-				t.plan(2);
+					t.test(name + ' async w/ ' + description, function (st) {
+						st.plan(2);
 
-				compat.pbkdf2(key, salt, f.iterations, f.dkLen, algorithm, function (err, result) {
-					t.error(err);
-					t.equal(result.toString('hex'), expected);
+						compat.pbkdf2(key, salt, f.iterations, f.dkLen, algorithm, function (err, result) {
+							st.error(err);
+							st.equal(result.toString('hex'), expected);
+						});
+					});
+
+					t.test(name + 'sync w/ ' + description, function (st) {
+						st.plan(1);
+
+						var result = compat.pbkdf2Sync(key, salt, f.iterations, f.dkLen, algorithm);
+						st.equal(result.toString('hex'), expected);
+					});
 				});
-			});
 
-			tape(name + 'sync w/ ' + description, function (t) {
-				t.plan(1);
+				fixtures.invalid.forEach(function (f) {
+					var description = algorithm + ' should throw ' + f.exception;
 
-				var result = compat.pbkdf2Sync(key, salt, f.iterations, f.dkLen, algorithm);
-				t.equal(result.toString('hex'), expected);
-			});
-		});
+					t.test(name + ' async w/ ' + description, function (st) {
+						st.plan(1);
+						/* istanbul ignore next */
+						function noop() {}
+						st['throws'](function () {
+							compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, noop);
+						}, new RegExp(f.exception));
+					});
 
-		fixtures.invalid.forEach(function (f) {
-			var description = algorithm + ' should throw ' + f.exception;
+					t.test(name + ' sync w/' + description, function (st) {
+						st.plan(1);
 
-			tape(name + ' async w/ ' + description, function (t) {
-				t.plan(1);
-				/* istanbul ignore next */
-				function noop() {}
-				t['throws'](function () {
-					compat.pbkdf2(f.key, f.salt, f.iterations, f.dkLen, f.algo, noop);
-				}, new RegExp(f.exception));
-			});
+						st['throws'](function () {
+							compat.pbkdf2Sync(f.key, f.salt, f.iterations, f.dkLen, f.algo);
+						}, new RegExp(f.exception));
+					});
+				});
 
-			tape(name + ' sync w/' + description, function (t) {
-				t.plan(1);
-
-				t['throws'](function () {
-					compat.pbkdf2Sync(f.key, f.salt, f.iterations, f.dkLen, f.algo);
-				}, new RegExp(f.exception));
-			});
-		});
+				t.end();
+			}
+		);
 	});
 }
 
