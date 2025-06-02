@@ -30,23 +30,21 @@
 	},
 	"scripts": {
 		"prepublish": "npm run test",
-		"coverage-report": "nyc report --reporter=lcov",
-		"coverage-html": "nyc report --reporter=html",
-		"coverage": "nyc --check-coverage --branches 95 --functions 95 tape test/*.js",
 		"lint": "eslint --ext=js,mjs .",
 		"pretest": "npm run lint",
-		"tests-only": "tape test/*.js",
-		"test": "npm run tests-only",
+		"tests-only": "nyc --exclude=bench --exclude=coverage --exclude=test tape test/index.js",
+		"test": "npm run tests-only && npm run bundle-test",
+		"posttest": "npx npm@\">= 10.2\" audit --production",
 		"bundle-test": "browserify test/index.js > test/bundle.js",
 		"bench": "node bench/"
 	},
 	"devDependencies": {
 		"@ljharb/eslint-config": "^21.1.1",
 		"benchmark": "^2.1.4",
-		"browserify": "*",
+		"browserify": "^17.0.1",
 		"eslint": "=8.8.0",
-		"nyc": "^6.4.0",
-		"tape": "^4.5.1"
+		"nyc": "^10.3.2",
+		"tape": "^5.9.0"
 	},
 	"dependencies": {
 		"create-hash": "^1.1.2",
