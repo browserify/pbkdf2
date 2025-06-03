@@ -9,6 +9,10 @@ var tape = require('tape');
 var satisfies = require('semver').satisfies;
 var Buffer = require('safe-buffer').Buffer;
 
+var node = require('crypto');
+var js = require('../browser');
+var browserImpl = require('../lib/sync-browser');
+
 var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10);
 /* istanbul ignore next */
 if (pVersionMajor !== 4 || process.browser) {
@@ -212,7 +216,67 @@ function runTests(name, compat) {
 	});
 }
 
-var js = require('../browser');
+tape('does not return all zeroes for any algorithm', function (t) {
+	var algos2 = [
+		// 'sha3-512',
+		// 'sha3-256',
+		// 'SHA3-384',
+		// 'blake2b512',
+		'Sha256',
+		'ShA256',
+		'Sha512',
+		'sha512-256',
+		'SHA512',
+		'SHA1',
+		's-h-a-1',
+		'sha-1',
+		'RMD160',
+		'RIPEMD-160',
+		'ripemd-160'
+	];
+	algos2.forEach(function (algo) {
+		var throwCount = 0;
+		var impls = { __proto__: null, node: node.pbkdf2Sync, lib: js.pbkdf2Sync, browser: browserImpl };
+		var results = { __proto__: null };
+		for (var implName in impls) { // eslint-disable-line no-restricted-syntax
+			var pbkdf2Sync = impls[implName];
+			try {
+				var key = pbkdf2Sync('secret', 'salt', 100000, 64, algo).toString('hex');
+				results[implName] = key;
+				t.doesNotMatch(key, /^0+$/, implName + ' does not return all zeros for ' + algo);
+			} catch (e) {
+				throwCount += 1;
+				t.ok(e, implName + ' throws for ' + algo);
+				t.comment(e);
+			}
+		}
+
+		if (throwCount === 0) {
+			t.equal(throwCount, 0, 'all implementations return a value for ' + algo);
+			t.equal(
+				results.node,
+				results.lib,
+				'node and js pbkdf2Sync should return the same value for ' + algo
+			);
+
+			t.equal(
+				results.node,
+				results.browser,
+				'node and browser pbkdf2Sync should return the same value for ' + algo
+			);
+		} else {
+			t.equal(
+				throwCount,
+				3,
+				'all implementations throw for ' + algo,
+				{ todo: throwCount === 1 && algo === 'sha512-256' && 'sha.js does not yet support sha512-256' }
+			);
+		}
+	});
+
+	t.end();
+});
+
 runTests('JavaScript pbkdf2', js);
 
 var assign = require('object.assign');
@@ -221,7 +285,7 @@ var assign = require('object.assign');
 if (!process.browser) {
 	/* eslint global-require: 0 */
 	var browser = assign({}, js);
-	browser.pbkdf2Sync = require('../lib/sync-browser');
+	browser.pbkdf2Sync = browserImpl;
 	runTests('browser pbkdf2', {
 		pbkdf2: browser.pbkdf2,
 		pbkdf2Sync: require('../lib/sync-browser')
