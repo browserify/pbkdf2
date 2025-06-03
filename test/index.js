@@ -165,7 +165,7 @@ function runTests(name, compat) {
 						salt = f.salt;
 						saltType = 'string';
 					}
-					var expected = f.results[algorithm];
+					var expected = satisfies(process.version, '>= 3') || !f.resultsOld ? f.results[algorithm] : f.resultsOld[algorithm];
 					var description = algorithm + ' encodes "' + key + '" (' + keyType + ') with salt "' + salt + '" (' + saltType + ') with ' + algorithm + ' to ' + expected;
 
 					t.test(name + ' async w/ ' + description, function (st) {
