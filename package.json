@@ -29,7 +29,6 @@
 		"url": "https://github.com/crypto-browserify/pbkdf2.git"
 	},
 	"scripts": {
-		"prepublish": "npm run test",
 		"lint": "eslint --ext=js,mjs .",
 		"pretest": "npm run lint",
 		"tests-only": "nyc --exclude=bench --exclude=coverage --exclude=test tape test/index.js",
@@ -49,9 +48,9 @@
 		"tape": "^5.9.0"
 	},
 	"dependencies": {
-		"create-hash": "^1.1.2",
+		"create-hash": "~1.1.3",
 		"create-hmac": "^1.1.4",
-		"ripemd160": "^2.0.1",
+		"ripemd160": "=2.0.1",
 		"safe-buffer": "^5.0.1",
 		"sha.js": "^2.4.8"
 	},
