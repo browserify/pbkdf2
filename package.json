@@ -31,7 +31,7 @@
 	"scripts": {
 		"lint": "eslint --ext=js,mjs .",
 		"pretest": "npm run lint",
-		"tests-only": "nyc --exclude=bench --exclude=coverage --exclude=test tape test/index.js",
+		"tests-only": "nyc tape test/index.js",
 		"test": "npm run tests-only && npm run bundle-test",
 		"posttest": "npx npm@\">= 10.2\" audit --production",
 		"bundle-test": "browserify test/index.js > test/bundle.js",
@@ -56,11 +56,5 @@
 	},
 	"engines": {
 		"node": ">=0.12"
-	},
-	"nyc": {
-		"exclude": [
-			"lib/async.js",
-			"test/bundle.js"
-		]
 	}
 }
