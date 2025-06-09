@@ -32,3 +32,5 @@ test/bundle.js
 npm-shrinkwrap.json
 package-lock.json
 yarn.lock
+
+.npmignore
