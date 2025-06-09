@@ -4,12 +4,13 @@
 // SHA-256/SHA-512 test vectors from:
 // https://stackoverflow.com/questions/5130513/pbkdf2-hmac-sha2-test-vectors
 // https://stackoverflow.com/questions/15593184/pbkdf2-hmac-sha-512-test-vectors
-var fixtures = require('./fixtures');
 var tape = require('tape');
 var satisfies = require('semver').satisfies;
 var Buffer = require('safe-buffer').Buffer;
 
 var node = require('crypto');
+
+var fixtures = require('./fixtures');
 var js = require('../browser');
 var browserImpl = require('../lib/sync-browser');
 
@@ -173,19 +174,26 @@ function runTests(name, compat) {
 					var description = algorithm + ' encodes "' + key + '" (' + keyType + ') with salt "' + salt + '" (' + saltType + ') with ' + algorithm + ' to ' + expected;
 
 					t.test(name + ' async w/ ' + description, function (st) {
-						st.plan(2);
+						st.plan(3);
 
 						compat.pbkdf2(key, salt, f.iterations, f.dkLen, algorithm, function (err, result) {
 							st.error(err);
-							st.equal(result.toString('hex'), expected);
+
+							var hash = result.toString('hex');
+
+							st.doesNotMatch(hash, /^0+$/, 'is not the all-zeroes result');
+							st.equal(hash, expected);
 						});
 					});
 
 					t.test(name + 'sync w/ ' + description, function (st) {
-						st.plan(1);
+						st.plan(2);
 
 						var result = compat.pbkdf2Sync(key, salt, f.iterations, f.dkLen, algorithm);
-						st.equal(result.toString('hex'), expected);
+						var hash = result.toString('hex');
+
+						st.doesNotMatch(hash, /^0+$/, 'is not the all-zeroes result');
+						st.equal(hash, expected);
 					});
 				});
 
@@ -238,6 +246,7 @@ tape('does not return all zeroes for any algorithm', function (t) {
 		var throwCount = 0;
 		var impls = { __proto__: null, node: node.pbkdf2Sync, lib: js.pbkdf2Sync, browser: browserImpl };
 		var results = { __proto__: null };
+		var throws = { __proto__: null };
 		for (var implName in impls) { // eslint-disable-line no-restricted-syntax
 			var pbkdf2Sync = impls[implName];
 			try {
@@ -246,6 +255,7 @@ tape('does not return all zeroes for any algorithm', function (t) {
 				t.doesNotMatch(key, /^0+$/, implName + ' does not return all zeros for ' + algo);
 			} catch (e) {
 				throwCount += 1;
+				throws[implName] = true;
 				t.ok(e, implName + ' throws for ' + algo);
 				t.comment(e);
 			}
@@ -253,6 +263,7 @@ tape('does not return all zeroes for any algorithm', function (t) {
 
 		if (throwCount === 0) {
 			t.equal(throwCount, 0, 'all implementations return a value for ' + algo);
+			t.deepEqual(throws, { __proto__: null }, 'no implementations throw for ' + algo);
 			t.equal(
 				results.node,
 				results.lib,
@@ -265,9 +276,47 @@ tape('does not return all zeroes for any algorithm', function (t) {
 				'node and browser pbkdf2Sync should return the same value for ' + algo
 			);
 		} else {
-			t.equal(
-				throwCount,
-				3,
+			var expected = {
+				__proto__: null,
+				node: true,
+				lib: true,
+				browser: true
+			};
+			if (
+				(algo.toLowerCase() === 'ripemd-160' || algo.toLowerCase() === 'rmd160')
+				&& satisfies(process.version, '< 18') // node < 18 doesn't support ripemd160
+			) {
+				if (!throws.browser) {
+					delete expected.browser;
+				}
+				if (!throws.lib) {
+					delete expected.lib;
+				}
+			}
+
+			if (
+				algo.toLowerCase() === 'sha-1'
+				&& satisfies(process.version, '< 17') // node < 17 doesn't support "sha-1"
+				&& !throws.lib
+				&& !throws.browser
+			) {
+				delete expected.lib;
+				delete expected.browser;
+			}
+
+			if (
+				(algo.toLowerCase() === 'sha256' || algo.toLowerCase() === 'sha512')
+				&& satisfies(process.version, '< 10') // node < 10 doesn't support "sha256" or "sha512"
+				&& !throws.lib
+				&& !throws.browser
+			) {
+				delete expected.lib;
+				delete expected.browser;
+			}
+
+			t.deepEqual(
+				throws,
+				expected,
 				'all implementations throw for ' + algo,
 				{ todo: throwCount === 1 && algo === 'sha512-256' && 'sha.js does not yet support sha512-256' }
 			);
