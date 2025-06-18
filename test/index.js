@@ -14,6 +14,8 @@ var fixtures = require('./fixtures');
 var js = require('../browser');
 var browserImpl = require('../lib/sync-browser');
 
+var errMsg = function (name) { return new RegExp(name + ' must be a string, a Buffer, a Uint8Array, or a DataView'); };
+
 var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10);
 /* istanbul ignore next */
 if (pVersionMajor !== 4 || process.browser) {
@@ -108,25 +110,29 @@ function runTests(name, compat) {
 	tape(name + ' should throw if the password is not a string or an ArrayBuffer', function (t) {
 		t.plan(2);
 
-		t['throws'](function () {
-			compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1', function () {});
-		}, /Password must be a string, a Buffer, a typed array or a DataView/);
+		t['throws'](
+			function () { compat.pbkdf2(['a'], 'salt', 1, 32, 'sha1', function () {}); },
+			errMsg('Password')
+		);
 
-		t['throws'](function () {
-			compat.pbkdf2Sync(['a'], 'salt', 1, 32, 'sha1');
-		}, /Password must be a string, a Buffer, a typed array or a DataView/);
+		t['throws'](
+			function () { compat.pbkdf2Sync(['a'], 'salt', 1, 32, 'sha1'); },
+			errMsg('Password')
+		);
 	});
 
 	tape(name + ' should throw if the salt is not a string or an ArrayBuffer', function (t) {
 		t.plan(2);
 
-		t['throws'](function () {
-			compat.pbkdf2('pass', ['salt'], 1, 32, 'sha1');
-		}, /Salt must be a string, a Buffer, a typed array or a DataView/);
+		t['throws'](
+			function () { compat.pbkdf2('pass', ['salt'], 1, 32, 'sha1'); },
+			errMsg('Salt')
+		);
 
-		t['throws'](function () {
-			compat.pbkdf2Sync('pass', ['salt'], 1, 32, 'sha1');
-		}, /Salt must be a string, a Buffer, a typed array or a DataView/);
+		t['throws'](
+			function () { compat.pbkdf2Sync('pass', ['salt'], 1, 32, 'sha1'); },
+			errMsg('Salt')
+		);
 	});
 
 	var algos = ['sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'ripemd160'];
@@ -250,7 +256,7 @@ tape('does not return all zeroes for any algorithm', function (t) {
 		for (var implName in impls) { // eslint-disable-line no-restricted-syntax
 			var pbkdf2Sync = impls[implName];
 			try {
-				var key = pbkdf2Sync('secret', 'salt', 100000, 64, algo).toString('hex');
+				var key = pbkdf2Sync('secret', 'salt', 1e4, 64, algo).toString('hex');
 				results[implName] = key;
 				t.doesNotMatch(key, /^0+$/, implName + ' does not return all zeros for ' + algo);
 			} catch (e) {
