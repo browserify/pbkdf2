@@ -40,6 +40,7 @@
 		"auto-changelog": "^2.5.0",
 		"benchmark": "^2.1.4",
 		"browserify": "^17.0.1",
+		"encoding": "^0.1.13",
 		"eslint": "=8.8.0",
 		"npmignore": "^0.3.1",
 		"nyc": "^10.3.2",
