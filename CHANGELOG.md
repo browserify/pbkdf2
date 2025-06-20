@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.3](https://github.com/browserify/pbkdf2/compare/v3.1.2...v3.1.3) - 2025-06-20
+
+### Commits
+
+- Only apps should have lockfiles [`8b06730`](https://github.com/browserify/pbkdf2/commit/8b067308eedcc3b7da3e06202d437ff532de75bd)
+- [lint] fix whitespace [`9a76e2f`](https://github.com/browserify/pbkdf2/commit/9a76e2f37ef4541aeff92d97b7335b7fa6e989a8)
+- [lint] fix parens/curlies/semis/etc [`6fd84bf`](https://github.com/browserify/pbkdf2/commit/6fd84bf64a423d207d9e665f3e9fd88b148c4480)
+- [meta] add `auto-changelog` [`796c38d`](https://github.com/browserify/pbkdf2/commit/796c38d428ed9546e7ddfbb38322faa99921d716)
+- [Tests] fix tests in node 17 [`3661fb0`](https://github.com/browserify/pbkdf2/commit/3661fb0156177bfe380c7bcc133917e7ee501bc7)
+- Revert "[Tests] fix tests in node &lt; 3" [`7431b57`](https://github.com/browserify/pbkdf2/commit/7431b5766805cbf880c1b3d0f38d484357844ff7)
+- [Tests] fix tests in node &lt; 3 [`eb9f97a`](https://github.com/browserify/pbkdf2/commit/eb9f97a66ed83836bebc4ff563a1588248708501)
+- [Fix] ensure unknown algorithms throw + known ones match node [`26d4fd3`](https://github.com/browserify/pbkdf2/commit/26d4fd391e00ed806840ea1ef7341937985f4ba8)
+- [Tests] add GHA, always run nyc [`513906a`](https://github.com/browserify/pbkdf2/commit/513906a735e80a0e125e1a3363c5dbe90bb34bb7)
+- [lint] fix a few more rules [`ab04da8`](https://github.com/browserify/pbkdf2/commit/ab04da834a0342cb3779486314fa67ebc1e3f035)
+- [lint] switch to eslint [`89694cf`](https://github.com/browserify/pbkdf2/commit/89694cf7e4062a8c924fbe74ad2b2d3cf78f1715)
+- [Tests] add coverage [`d0d534b`](https://github.com/browserify/pbkdf2/commit/d0d534bfdc4db6d6ea9f719606ad18a78db6c124)
+- [Refactor] use `to-buffer` [`e3102a8`](https://github.com/browserify/pbkdf2/commit/e3102a8cd4830a3ac85cd0dd011cc002fdde33bb)
+- [readme] improve badges [`fca0c9d`](https://github.com/browserify/pbkdf2/commit/fca0c9d4c5b053d911315a3607367d1db9f9f605)
+- [Tests] remove unused travis file [`a2c7d93`](https://github.com/browserify/pbkdf2/commit/a2c7d93bbcad73c49dad0c18fef6b8a4af8c3310)
+- [meta] switch from `files` to `npmignore` [`7f31fbc`](https://github.com/browserify/pbkdf2/commit/7f31fbca528fa5af3b7d3910daf09a7e5ed8adb4)
+- [Tests] use .nycrc [`8d628e8`](https://github.com/browserify/pbkdf2/commit/8d628e8d5559b4acd4d4a714afb04a2990f901b7)
+- [Refactor] minor tweaks [`fc61005`](https://github.com/browserify/pbkdf2/commit/fc61005c8cbd480e24ee103ac39a45f0d90ac636)
+- [Deps] update `create-hmac`, `safe-buffer`, `sha.js` [`ae2a7d0`](https://github.com/browserify/pbkdf2/commit/ae2a7d051c9133c25d5212ba4f46747c0ed4c190)
+- [Fix] pin `create-hash`, `ripemd160` due to breaking changes [`e079968`](https://github.com/browserify/pbkdf2/commit/e07996890af79296f1913431fb3b252e25df2f0e)
+- [Tests] fix tests in node 3 [`45fbcf3`](https://github.com/browserify/pbkdf2/commit/45fbcf30431f9585ae3b61f2207c0a16c1953915)
+- [meta] skip publishing benchmarks [`19ea57b`](https://github.com/browserify/pbkdf2/commit/19ea57bf11d055ddcd97d2556cd3097663b050b9)
+- [Dev Deps] add missing peer dep [`645e252`](https://github.com/browserify/pbkdf2/commit/645e252375087e97beb95e518038b99eb5724c5b)
+
 ## [v3.1.2](https://github.com/browserify/pbkdf2/compare/v3.1.1...v3.1.2) - 2021-04-09
 
 ### Commits
