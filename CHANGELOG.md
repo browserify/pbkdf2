@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.4](https://github.com/browserify/pbkdf2/compare/v3.1.3...v3.1.4) - 2025-09-22
+
+### Commits
+
+- [Deps] update `create-hash`, `ripemd160`, `sha.js`, `to-buffer` [`8dbf49b`](https://github.com/browserify/pbkdf2/commit/8dbf49b38235066c565a92eaf3722720a1333a2d)
+- [meta] update repo URLs [`d15bc35`](https://github.com/browserify/pbkdf2/commit/d15bc351de0edbed394d2a6189176960aaa0d050)
+- [Dev Deps] update `@ljharb/eslint-config` [`aaf870b`](https://github.com/browserify/pbkdf2/commit/aaf870b1d1855e6a381af05021f304294a79f7c9)
+
 ## [v3.1.3](https://github.com/browserify/pbkdf2/compare/v3.1.2...v3.1.3) - 2025-06-20
 
 ### Commits
