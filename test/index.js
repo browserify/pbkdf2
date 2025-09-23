@@ -231,23 +231,26 @@ function runTests(name, compat) {
 }
 
 tape('does not return all zeroes for any algorithm', function (t) {
-	var algos2 = [
+	// node 0.10 only supports HMAC-SHA1
+	var is010 = node.pbkdf2Sync.length < 5;
+
+	var algos2 = [].concat(
 		// 'sha3-512',
 		// 'sha3-256',
 		// 'SHA3-384',
 		// 'blake2b512',
-		'Sha256',
-		'ShA256',
-		'Sha512',
-		'sha512-256',
-		'SHA512',
+		is010 ? [] : 'Sha256',
+		is010 ? [] : 'ShA256',
+		is010 ? [] : 'Sha512',
+		is010 ? [] : 'sha512-256',
+		is010 ? [] : 'SHA512',
 		'SHA1',
-		's-h-a-1',
+		is010 ? [] : 's-h-a-1',
 		'sha-1',
-		'RMD160',
-		'RIPEMD-160',
-		'ripemd-160'
-	];
+		is010 ? [] : 'RMD160',
+		is010 ? [] : 'RIPEMD-160',
+		is010 ? [] : 'ripemd-160'
+	);
 	algos2.forEach(function (algo) {
 		var throwCount = 0;
 		var impls = { __proto__: null, node: node.pbkdf2Sync, lib: js.pbkdf2Sync, browser: browserImpl };
@@ -324,7 +327,12 @@ tape('does not return all zeroes for any algorithm', function (t) {
 				throws,
 				expected,
 				'all implementations throw for ' + algo,
-				{ todo: throwCount === 1 && algo === 'sha512-256' && 'sha.js does not yet support sha512-256' }
+				{
+					// https://nodejs.org/download/release/v0.10.0/docs/api/crypto.html#crypto_crypto_pbkdf2_password_salt_iterations_keylen_callback
+					todo: is010
+						? 'node 0.10 does not support the algo argument'
+						: throwCount === 1 && algo === 'sha512-256' && 'sha.js does not yet support sha512-256'
+				}
 			);
 		}
 	});

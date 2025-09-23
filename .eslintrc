@@ -17,6 +17,7 @@
 	},
 
 	"rules": {
+		"complexity": "off",
 		"func-style": "warn",
 		"max-params": "warn",
 		"multiline-comment-style": "off",
