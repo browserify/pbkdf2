@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.5](https://github.com/browserify/pbkdf2/compare/v3.1.4...v3.1.5) - 2025-09-23
+
+### Commits
+
+- [Fix] only allow finite iterations [`67bd94d`](https://github.com/browserify/pbkdf2/commit/67bd94dbbf21b93f5e282ee910728945c8ef2827)
+- [Fix] restore node 0.10 support [`8f59d96`](https://github.com/browserify/pbkdf2/commit/8f59d962f71dcb2cc14067d7f514ff96e3406f81)
+- [Fix] check parameters before the "no Promise" bailout [`d2dc5f0`](https://github.com/browserify/pbkdf2/commit/d2dc5f052cacadf3d4a09d87164158da875ca740)
+
 ## [v3.1.4](https://github.com/browserify/pbkdf2/compare/v3.1.3...v3.1.4) - 2025-09-22
 
 ### Commits
