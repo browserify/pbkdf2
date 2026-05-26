@@ -38,10 +38,10 @@
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.2",
-		"@ljharb/eslint-config": "^22.2.0",
+		"@ljharb/eslint-config": "^22.2.3",
 		"@ljharb/tsconfig": "^0.3.2",
-		"@types/node": "^25.4.0",
-		"auto-changelog": "^2.5.0",
+		"@types/node": "^25.9.1",
+		"auto-changelog": "^2.5.1",
 		"benchmark": "^2.1.4",
 		"browserify": "^17.0.1",
 		"encoding": "^0.1.13",
