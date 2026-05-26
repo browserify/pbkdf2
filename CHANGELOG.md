@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.6](https://github.com/browserify/pbkdf2/compare/v3.1.5...v3.1.6) - 2026-05-26
+
+### Commits
+
+- [New] add TypeScript type declarations [`fb1f747`](https://github.com/browserify/pbkdf2/commit/fb1f74746f8f1ab171d7d43ede48eeca9e694ce3)
+- [Fix] coerce `-0` keylen to `+0` [`7c4a495`](https://github.com/browserify/pbkdf2/commit/7c4a4959142269cbfae8b1448e3a5848b84ac2f4)
+- [Dev Deps] update `@ljharb/eslint-config`, `@types/node`, `eslint`, `npmignore` [`e3cce16`](https://github.com/browserify/pbkdf2/commit/e3cce1691f5021a70673ecb8833f729c1840cd38)
+- [eslint] fix an error [`f6b0e42`](https://github.com/browserify/pbkdf2/commit/f6b0e424257980e3331da18bd7d1ed3232d17afd)
+- [Tests] fix `npm run postlint` [`b729629`](https://github.com/browserify/pbkdf2/commit/b729629ca1ced08e42ecd5419a7971f20307ebb5)
+- [Dev Deps] update `@ljharb/eslint-config`, `@types/node`, `auto-changelog` [`5e0cf51`](https://github.com/browserify/pbkdf2/commit/5e0cf517d1124dd42df315b0cc5cc6219426350b)
+- [Deps] update `to-buffer` [`1c3b1f5`](https://github.com/browserify/pbkdf2/commit/1c3b1f526b052a29b3b42120c9821895772df7e8)
+- [readme] replace runkit CI badge with shields.io check-runs badge [`528bd38`](https://github.com/browserify/pbkdf2/commit/528bd3861dda05e2d7e1ef7cbb724baca43766e3)
+
 ## [v3.1.5](https://github.com/browserify/pbkdf2/compare/v3.1.4...v3.1.5) - 2025-09-23
 
 ### Commits
