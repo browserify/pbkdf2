@@ -78,5 +78,8 @@
 			"bench",
 			"test"
 		]
+	},
+	"overrides": {
+		"fflate": "=0.8.2"
 	}
 }
