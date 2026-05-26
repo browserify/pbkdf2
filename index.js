@@ -7,7 +7,7 @@ var defaultEncoding = require('./lib/default-encoding');
 var toBuffer = require('./lib/to-buffer');
 
 function nativePBKDF2(password, salt, iterations, keylen, digest, callback) {
-	checkParameters(iterations, keylen);
+	keylen = checkParameters(iterations, keylen);
 	password = toBuffer(password, defaultEncoding, 'Password');
 	salt = toBuffer(salt, defaultEncoding, 'Salt');
 
@@ -23,7 +23,7 @@ function nativePBKDF2(password, salt, iterations, keylen, digest, callback) {
 }
 
 function nativePBKDF2Sync(password, salt, iterations, keylen, digest) {
-	checkParameters(iterations, keylen);
+	keylen = checkParameters(iterations, keylen);
 	password = toBuffer(password, defaultEncoding, 'Password');
 	salt = toBuffer(salt, defaultEncoding, 'Salt');
 	digest = digest || 'sha1';

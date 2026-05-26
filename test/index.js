@@ -340,6 +340,36 @@ tape('does not return all zeroes for any algorithm', function (t) {
 	t.end();
 });
 
+tape('coerces `-0` keylen to `+0` (GHSA-xcx4-h4w9-hqq4)', function (t) {
+	// `-0` slips past the `keylen < 0` guard (since `-0 < 0` is `false`) and,
+	// in the native impl, aborts the process (SIGABRT) on Node.js 15+. After
+	// coercion it must behave exactly like `+0`.
+	var syncImpls = { __proto__: null, js: js.pbkdf2Sync, browser: browserImpl };
+	/* istanbul ignore next */
+	if (!process.browser) {
+		syncImpls.node = require('../').pbkdf2Sync;
+	}
+
+	var getOutcome = function (pbkdf2Sync, keylen) {
+		try {
+			return { result: pbkdf2Sync('password', 'salt', 1, keylen, 'sha256').toString('hex') };
+		} catch (e) {
+			return { error: e.message };
+		}
+	};
+
+	var names = Object.keys(syncImpls);
+	t.plan(names.length);
+
+	names.forEach(function (name) {
+		t.deepEqual(
+			getOutcome(syncImpls[name], -0),
+			getOutcome(syncImpls[name], 0),
+			name + ': `-0` produces the same outcome as `+0`'
+		);
+	});
+});
+
 runTests('JavaScript pbkdf2', js);
 
 var assign = require('object.assign');
