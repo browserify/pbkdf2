@@ -370,6 +370,49 @@ tape('coerces `-0` keylen to `+0` (GHSA-xcx4-h4w9-hqq4)', function (t) {
 	});
 });
 
+tape('long passwords are hashed once, not per iteration (GHSA-477h-4r7f-fvrx)', function (t) {
+	var syncImpls = { __proto__: null, js: js.pbkdf2Sync, browser: browserImpl };
+	/* istanbul ignore next */
+	if (!process.browser) {
+		syncImpls.node = require('../').pbkdf2Sync;
+	}
+
+	var algos = ['md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'rmd160'];
+	var lengths = [63, 64, 65, 127, 128, 129, 1000];
+
+	Object.keys(syncImpls).forEach(function (name) {
+		algos.forEach(function (algo) {
+			lengths.forEach(function (length) {
+				var password = Buffer.alloc(length, length % 256);
+				t.equal(
+					syncImpls[name](password, 'salt', 3, 70, algo).toString('hex'),
+					node.pbkdf2Sync(password, 'salt', 3, 70, algo).toString('hex'),
+					name + ': ' + algo + ' with a ' + length + '-byte password matches node'
+				);
+			});
+		});
+
+		var longPassword = Buffer.alloc(1048576, 46);
+		var prehashed = node.createHash('sha256').update(longPassword).digest();
+
+		var start = Date.now();
+		var prehashedResult = syncImpls[name](prehashed, 'salt', 2000, 32, 'sha256');
+		var prehashedTime = Date.now() - start;
+
+		start = Date.now();
+		var longResult = syncImpls[name](longPassword, 'salt', 2000, 32, 'sha256');
+		var longTime = Date.now() - start;
+
+		t.equal(longResult.toString('hex'), prehashedResult.toString('hex'), name + ': a 1 MiB password matches its pre-hashed equivalent');
+		t.ok(
+			longTime <= (prehashedTime * 10) + 250,
+			name + ': a 1 MiB password is not rehashed on every iteration (' + longTime + 'ms vs ' + prehashedTime + 'ms)'
+		);
+	});
+
+	t.end();
+});
+
 runTests('JavaScript pbkdf2', js);
 
 var assign = require('object.assign');
