@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.1.7](https://github.com/browserify/pbkdf2/compare/v3.1.6...v3.1.7) - 2026-09-29
+
+### Commits
+
+- [Fix] hash long passwords once, not on every iteration [`493d8d8`](https://github.com/browserify/pbkdf2/commit/493d8d8ff437f680338bf7397398fda884ad462e)
+- [Dev Deps] update `@arethetypeswrong/cli`, `@ljharb/eslint-config`, `@types/node`, `auto-changelog`, `tape` [`bbc305e`](https://github.com/browserify/pbkdf2/commit/bbc305eb832364b54ff6a5e6771730ed75ce3568)
+- [Tests] skip rmd160 in the long-password test on node 17 [`3905818`](https://github.com/browserify/pbkdf2/commit/3905818fb8c773de713aadac764bba4113392098)
+
 ## [v3.1.6](https://github.com/browserify/pbkdf2/compare/v3.1.5...v3.1.6) - 2026-05-26
 
 ### Commits
