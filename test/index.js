@@ -382,6 +382,10 @@ tape('long passwords are hashed once, not per iteration (GHSA-477h-4r7f-fvrx)', 
 
 	Object.keys(syncImpls).forEach(function (name) {
 		algos.forEach(function (algo) {
+			if (satisfies(process.version, '^17') && algo === 'rmd160') {
+				t.skip(name + ': this node version does not support ' + algo);
+				return;
+			}
 			lengths.forEach(function (length) {
 				var password = Buffer.alloc(length, length % 256);
 				t.equal(
